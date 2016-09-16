@@ -9,7 +9,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import securitycamera.webserver.auth.UserAuthenticator;
 import securitycamera.webserver.handler.AdminPageHandler;
-import securitycamera.webserver.handler.InfoPageHandler;
+import securitycamera.webserver.handler.BasicPageHandler;
 
 public class Webserver {
 
@@ -22,7 +22,7 @@ public class Webserver {
 		this.server = HttpServer.create(new InetSocketAddress(80), 0);
 
 		@SuppressWarnings("unused")
-		HttpContext infoPage = server.createContext("/", new InfoPageHandler());
+		HttpContext infoPage = server.createContext("/", new BasicPageHandler());
 		HttpContext adminPage = server.createContext("/admin", new AdminPageHandler());
 
 		adminPage.setAuthenticator(new UserAuthenticator());

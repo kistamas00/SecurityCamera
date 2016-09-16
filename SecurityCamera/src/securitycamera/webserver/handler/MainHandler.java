@@ -14,13 +14,15 @@ import com.sun.net.httpserver.HttpHandler;
 
 public abstract class MainHandler implements HttpHandler {
 
-	private static Logger LOGGER = Logger.getLogger(MainHandler.class.getName());
+	private static Logger LOGGER = Logger
+			.getLogger(MainHandler.class.getName());
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
-		LOGGER.info(exchange.getRequestMethod() + " request from " + exchange.getRemoteAddress().getAddress().toString()
-				+ " to " + exchange.getRequestURI().toString() + " (" + 200 + ")");
+		LOGGER.info(exchange.getRequestMethod() + " request from "
+				+ exchange.getRemoteAddress().getAddress().toString() + " to "
+				+ exchange.getRequestURI().toString() + " (" + 200 + ")");
 
 		String responseText = "OK!";
 
@@ -32,7 +34,8 @@ public abstract class MainHandler implements HttpHandler {
 		responseBody.close();
 	}
 
-	protected final void sendStaticFile(HttpExchange exchange, Path path) throws IOException {
+	protected final void sendStaticFile(HttpExchange exchange, Path path)
+			throws IOException {
 
 		// LOGGER.info(exchange.getRequestMethod() + " request from " +
 		// exchange.getRemoteAddress().getAddress().toString()
@@ -47,6 +50,8 @@ public abstract class MainHandler implements HttpHandler {
 			contentType = "application/javascript";
 		} else if (url.endsWith(".jpg")) {
 			contentType = "image/jpeg";
+		} else if (url.endsWith(".woff2")) {
+			contentType = "font/woff2";
 		}
 
 		exchange.getResponseHeaders().add("Content-type", contentType);
@@ -60,7 +65,8 @@ public abstract class MainHandler implements HttpHandler {
 		responseBody.close();
 	}
 
-	protected final void sendEncodedImage(HttpExchange exchange, byte[] encodedImg) throws IOException {
+	protected final void sendEncodedImage(HttpExchange exchange,
+			byte[] encodedImg) throws IOException {
 
 		if (encodedImg == null) {
 			sendNotFoundPage(exchange);
@@ -74,7 +80,8 @@ public abstract class MainHandler implements HttpHandler {
 			String startString = "data:image/jpeg;base64,";
 
 			exchange.getResponseHeaders().add("Content-type", "text/plain");
-			exchange.sendResponseHeaders(200, startString.length() + encodedImg.length);
+			exchange.sendResponseHeaders(200,
+					startString.length() + encodedImg.length);
 			exchange.getResponseBody().write(startString.getBytes());
 			exchange.getResponseBody().write(encodedImg);
 			exchange.getResponseBody().flush();
@@ -82,7 +89,8 @@ public abstract class MainHandler implements HttpHandler {
 		}
 	}
 
-	protected final void sendObject(HttpExchange exchange, Map<String, Object> map) throws IOException {
+	protected final void sendObject(HttpExchange exchange,
+			Map<String, Object> map) throws IOException {
 
 		// LOGGER.info(exchange.getRequestMethod() + " request from " +
 		// exchange.getRemoteAddress().getAddress().toString()
@@ -114,7 +122,8 @@ public abstract class MainHandler implements HttpHandler {
 		responseBody.close();
 	}
 
-	protected final void sendObject(HttpExchange exchange, List<String> list) throws IOException {
+	protected final void sendObject(HttpExchange exchange, List<String> list)
+			throws IOException {
 
 		// LOGGER.info(exchange.getRequestMethod() + " request from " +
 		// exchange.getRemoteAddress().getAddress().toString()
@@ -140,10 +149,12 @@ public abstract class MainHandler implements HttpHandler {
 		responseBody.close();
 	}
 
-	protected final void sendNotFoundPage(HttpExchange exchange) throws IOException {
+	protected final void sendNotFoundPage(HttpExchange exchange)
+			throws IOException {
 
-		LOGGER.info(exchange.getRequestMethod() + " request from " + exchange.getRemoteAddress().getAddress().toString()
-				+ " to " + exchange.getRequestURI().toString() + " (" + 404 + ")");
+		LOGGER.info(exchange.getRequestMethod() + " request from "
+				+ exchange.getRemoteAddress().getAddress().toString() + " to "
+				+ exchange.getRequestURI().toString() + " (" + 404 + ")");
 
 		OutputStream responseBody = exchange.getResponseBody();
 
@@ -152,10 +163,12 @@ public abstract class MainHandler implements HttpHandler {
 		responseBody.close();
 	}
 
-	protected final void redirect(HttpExchange exchange, String url) throws IOException {
+	protected final void redirect(HttpExchange exchange, String url)
+			throws IOException {
 
-		LOGGER.info(exchange.getRequestMethod() + " request from " + exchange.getRemoteAddress().getAddress().toString()
-				+ " to " + exchange.getRequestURI().toString() + " (" + 301 + ")");
+		LOGGER.info(exchange.getRequestMethod() + " request from "
+				+ exchange.getRemoteAddress().getAddress().toString() + " to "
+				+ exchange.getRequestURI().toString() + " (" + 301 + ")");
 
 		OutputStream responseBody = exchange.getResponseBody();
 

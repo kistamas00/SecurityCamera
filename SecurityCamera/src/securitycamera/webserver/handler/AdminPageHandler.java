@@ -23,7 +23,7 @@ public class AdminPageHandler extends MainHandler {
 
 			if (url.equals("/admin")) {
 
-				sendStaticFile(exchange, Paths.get("content", "admin.html"));
+				sendStaticFile(exchange, Paths.get("content", "settings.html"));
 
 			} else {
 
@@ -66,7 +66,8 @@ public class AdminPageHandler extends MainHandler {
 
 			} else if (url.equals("/admin/email")) {
 
-				BufferedReader br = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(exchange.getRequestBody()));
 				StringBuffer sb = new StringBuffer();
 				String line = null;
 
@@ -76,12 +77,13 @@ public class AdminPageHandler extends MainHandler {
 
 				br.close();
 
-				String email = sb.toString().split("=")[1].replaceAll("%40", "@");
+				String email = sb.toString().split("=")[1].replaceAll("%40",
+						"@");
 
 				SecurityCamera.setEmailAdress(email);
 			}
 
-			redirect(exchange, "/");
+			redirect(exchange, "/admin");
 
 		} else {
 

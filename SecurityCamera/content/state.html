@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/public/css/bootstrap.min.css">
+	<title>Security Camera</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+				</button>
+				<a class="navbar-brand" href="/">Security Camera</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/">State</a></li>
+					<li><a href="/stream">Stream</a></li>
+					<li><a href="/pictures">Pictures</a></li> 
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Module</th>
+								<th>State</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Webserver</td>
+								<td><span class="label label-success">RUNNING</span></td>
+							</tr>
+							<tr>
+								<td>Camera</td>
+								<td><span id="camera-status"></span></td>
+							</tr>
+							<tr>
+								<td>Streaming</td>
+								<td><span id="streaming-status"></span></td>
+							</tr>
+							<tr>
+								<td>Motion detection</td>
+								<td><span id="motion-detection-status"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/state.js"></script>
+</html>

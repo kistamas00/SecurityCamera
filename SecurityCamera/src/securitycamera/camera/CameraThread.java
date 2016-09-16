@@ -19,7 +19,8 @@ import securitycamera.email.Email;
 
 public class CameraThread extends Thread {
 
-	private final static Logger LOGGER = Logger.getLogger(CameraThread.class.getName());
+	private final static Logger LOGGER = Logger
+			.getLogger(CameraThread.class.getName());
 	private final static int FPS = 25;
 	private final static double DIFF_LIMIT = 1.75;
 	private final static long DETECTION_TIME_LIMIT_DEFAULT = 1000;
@@ -95,10 +96,12 @@ public class CameraThread extends Thread {
 			}
 
 			if (motionDetection && previousFrame != null
-					&& System.currentTimeMillis() - previousDetection >= detectionTimeLimit) {
+					&& System.currentTimeMillis()
+							- previousDetection >= detectionTimeLimit) {
 
 				double errorL2 = Core.norm(previousFrame, frame, Core.NORM_L2);
-				double difference = errorL2 / (double) (previousFrame.rows() * previousFrame.cols());
+				double difference = errorL2 / (double) (previousFrame.rows()
+						* previousFrame.cols());
 				difference *= 100;
 
 				if (difference > DIFF_LIMIT) {
@@ -106,7 +109,8 @@ public class CameraThread extends Thread {
 					motionDetected = true;
 					detectionTimeLimit *= 2;
 
-					LOGGER.info("Motion detected");
+					LOGGER.info("Motion detected, next time limit: "
+							+ detectionTimeLimit + " ms");
 
 					previousDetection = System.currentTimeMillis();
 				}
@@ -114,9 +118,11 @@ public class CameraThread extends Thread {
 
 			if (saveNext || motionDetected) {
 
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+				DateFormat dateFormat = new SimpleDateFormat(
+						"yyyy-MM-dd-HH-mm-ss");
 				String fileName = dateFormat.format(new Date()) + ".jpg";
-				String path = "public" + File.separator + "pictures" + File.separator + fileName;
+				String path = "public" + File.separator + "pictures"
+						+ File.separator + fileName;
 
 				Imgcodecs.imwrite(path, frame);
 

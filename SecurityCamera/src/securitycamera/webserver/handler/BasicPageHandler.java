@@ -13,7 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import securitycamera.SecurityCamera;
 
-public class InfoPageHandler extends MainHandler {
+public class BasicPageHandler extends MainHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -27,9 +27,17 @@ public class InfoPageHandler extends MainHandler {
 
 			if (url.equals("/")) {
 
-				sendStaticFile(exchange, Paths.get("content", "info.html"));
+				sendStaticFile(exchange, Paths.get("content", "state.html"));
+
+			} else if (url.equals("/stream")) {
+
+				sendStaticFile(exchange, Paths.get("content", "stream.html"));
 
 			} else if (url.equals("/pictures")) {
+
+				sendStaticFile(exchange, Paths.get("content", "pictures.html"));
+
+			} else if (url.equals("/pictures/all")) {
 
 				File folder = new File("public" + File.separator + "pictures");
 				File[] listOfFiles = folder.listFiles();
@@ -41,7 +49,7 @@ public class InfoPageHandler extends MainHandler {
 
 				sendObject(exchange, fileNames);
 
-			} else if (url.equals("/stream")) {
+			} else if (url.equals("/stream/next")) {
 
 				byte[] b = SecurityCamera.getLastFrameCopy();
 
@@ -53,7 +61,8 @@ public class InfoPageHandler extends MainHandler {
 
 				map.put("camera", SecurityCamera.cameraIsRunning());
 				map.put("stream", SecurityCamera.cameraIsStreaming());
-				map.put("motionDetection", SecurityCamera.cameraMotionDetectionEnabled());
+				map.put("motionDetection",
+						SecurityCamera.cameraMotionDetectionEnabled());
 				map.put("email", SecurityCamera.getEmailAdress());
 
 				sendObject(exchange, map);
@@ -66,6 +75,10 @@ public class InfoPageHandler extends MainHandler {
 				if (Files.exists(Paths.get(fileName))) {
 
 					sendStaticFile(exchange, Paths.get(fileName));
+
+				} else {
+
+					sendNotFoundPage(exchange);
 				}
 
 			} else {

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/public/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/public/css/bootstrap-switch.min.css">
+	<title>Security Camera</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+				</button>
+				<a class="navbar-brand" href="/">Security Camera</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="/">State</a></li>
+					<li><a href="/stream">Stream</a></li>
+					<li><a href="/pictures">Pictures</a></li> 
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Module</th>
+								<th>State</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Webserver</td>
+								<td id="webserver-switch-container"></td>
+							</tr>
+							<tr>
+								<td>Camera</td>
+								<td id="camera-switch-container"></td>
+							</tr>
+							<tr>
+								<td>Streaming</td>
+								<td id="streaming-switch-container"></td>
+							</tr>
+							<tr>
+								<td>Motion detection</td>
+								<td id="motion-detection-switch-container"></td>
+							</tr>
+							<tr>
+								<td>Send e-mail to:</td>
+								<td>
+									<div class="input-group input-group-sm">
+										<input id="email-input" type="email" class="form-control">
+										<span class="input-group-btn">
+											<button id="email-set-button" class="btn btn-primary" type="button">Set e-mail</button>
+										</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<form action="/admin/camera/capture/photo" method="post">
+										<input class="btn btn-primary btn-block" type="submit" value="Capture photo">
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/bootstrap-switch.min.js"></script>
+<script src="/public/js/settings.js"></script>
+</html>
