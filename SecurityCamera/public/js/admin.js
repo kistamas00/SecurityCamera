@@ -6,7 +6,7 @@ $(document).ready(function() {
 	$('#webserver-switch').click(function() {
 		
 		if ($('#webserver-switch-cb').prop('checked') && window.confirm("Are you sure?")) {
-		
+			
 			$('#webserver-switch-cb').prop('checked', !$('#webserver-switch-cb').prop('checked'));
 			
 			$.ajax({
@@ -34,7 +34,7 @@ $(document).ready(function() {
 	$('#streaming-switch').click(function() {
 		
 		if ($('#camera-switch-cb').prop('checked') === true) {
-		
+			
 			$.ajax({
 				url: $('#streaming-switch-cb').prop('checked') === false ? '/admin/camera/stream/on' : '/admin/camera/stream/off',
 				type: 'POST',
@@ -48,7 +48,7 @@ $(document).ready(function() {
 	$('#motion-detection-switch').click(function() {
 		
 		if ($('#camera-switch-cb').prop('checked') === true) {
-		
+			
 			$.ajax({
 				url: $('#motion-detection-switch-cb').prop('checked') === false ? '/admin/camera/motiondetection/enable' : '/admin/camera/motiondetection/disable',
 				type: 'POST',

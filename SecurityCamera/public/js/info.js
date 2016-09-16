@@ -32,7 +32,7 @@ function getStream() {
 			}
 		});
 	}
-		
+	
 	if (isStreamOn === true) {
 		setTimeout(getStream, 1000 / FPS);
 	}
@@ -54,7 +54,7 @@ function updateContent() {
 				$('#streaming-status').html('ON');
 				
 				if (isStreamOn === false) {
-						
+					
 					isStreamOn = true;
 					isArrived = true;
 					getStream();
