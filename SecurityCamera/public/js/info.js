@@ -5,7 +5,7 @@ var isArrived = true;
 $(document).ready(function() {
 
 	updateContent();
-	var updateInterval = setInterval(updateContent, 3000);
+	setInterval(updateContent, 3000);
 });
 
 function getStream() {
