@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	updateContent();
-	// setInterval(updateContent, 3000);
+	setInterval(updateContent, 3000);
 });
 
 function updateContent() {

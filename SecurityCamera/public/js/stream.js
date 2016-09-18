@@ -25,8 +25,7 @@ function getStream() {
 					class:'img-responsive center-block'
 				});
 				
-				$('#stream').html('');
-				$('#stream').append($imgElem);
+				$('#stream').html($imgElem);
 				
 				isArrived = true;
 			},
