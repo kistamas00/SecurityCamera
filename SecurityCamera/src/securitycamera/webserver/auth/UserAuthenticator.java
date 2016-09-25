@@ -10,7 +10,8 @@ import com.sun.net.httpserver.BasicAuthenticator;
 
 public class UserAuthenticator extends BasicAuthenticator {
 
-	private static Logger LOGGER = Logger.getLogger(UserAuthenticator.class.getName());
+	private static Logger LOGGER = Logger
+			.getLogger(UserAuthenticator.class.getName());
 
 	private Map<String, String> passwords;
 	private Set<String> loggedIn;
@@ -37,7 +38,8 @@ public class UserAuthenticator extends BasicAuthenticator {
 
 		} else {
 
-			LOGGER.info("Credentials rejected for " + username + " - " + password);
+			LOGGER.info(
+					"Credentials rejected for " + username + " - " + password);
 			return false;
 		}
 	}

@@ -9,7 +9,8 @@ import securitycamera.SecurityCamera;
 
 public class Camera {
 
-	private final static Logger LOGGER = Logger.getLogger(Camera.class.getName());
+	private final static Logger LOGGER = Logger
+			.getLogger(Camera.class.getName());
 
 	private CameraThread cameraThread;
 
@@ -20,7 +21,8 @@ public class Camera {
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 			break;
 		case WINDOWS:
-			System.load(System.getProperty("user.dir") + File.separator + Core.NATIVE_LIBRARY_NAME + ".dll");
+			System.load(System.getProperty("user.dir") + File.separator
+					+ Core.NATIVE_LIBRARY_NAME + ".dll");
 			break;
 		}
 	}
@@ -55,7 +57,8 @@ public class Camera {
 	}
 
 	public byte[] getLastFrameCopy() {
-		return cameraThread == null || !cameraThread.isStreaming() ? null : cameraThread.getLastFrameCopy();
+		return cameraThread == null || !cameraThread.isStreaming() ? null
+				: cameraThread.getLastFrameCopy();
 	}
 
 	public boolean isRunning() {
@@ -70,7 +73,8 @@ public class Camera {
 
 	public boolean motionDetectionEnabled() {
 
-		return cameraThread == null ? false : cameraThread.motionDetectionEnabled();
+		return cameraThread == null ? false
+				: cameraThread.motionDetectionEnabled();
 	}
 
 	public void setStreaming(boolean isStreaming) {

@@ -10,8 +10,10 @@ import securitycamera.webserver.Webserver;
 
 public class SecurityCamera {
 
-	private final static Logger LOGGER = Logger.getLogger(SecurityCamera.class.getName());
-	public final static OStype OS_TYPE = OStype.valueOf(System.getProperty("os.name").split(" ")[0].toUpperCase());
+	private final static Logger LOGGER = Logger
+			.getLogger(SecurityCamera.class.getName());
+	public final static OStype OS_TYPE = OStype
+			.valueOf(System.getProperty("os.name").split(" ")[0].toUpperCase());
 
 	private static Camera camera;
 	private static Webserver webserver;
