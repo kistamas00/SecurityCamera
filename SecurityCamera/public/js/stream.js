@@ -1,6 +1,8 @@
-var FPS = 10;
+var FPS = 15;
 var isStreamOn = false;
 var isArrived = true;
+var $actualFrame;
+var $nextFrame;
 
 $(document).ready(function() {
 
@@ -17,7 +19,6 @@ function getStream() {
 			url: '/stream/next',
 			type: 'GET',
 			success: function(data) {
-				
 
 				var $imgElem = $('<img>')
 				$imgElem.attr({
@@ -25,7 +26,18 @@ function getStream() {
 					class:'img-responsive center-block'
 				});
 				
-				$('#stream').html($imgElem);
+				$imgElem.hide();
+				$('#stream').append($imgElem);
+
+				if ($actualFrame !== undefined) {
+					$actualFrame.remove();
+				}
+				if ($nextFrame !== undefined) {
+					$nextFrame.show();
+				}
+
+				$actualFrame = $nextFrame;
+				$nextFrame = $imgElem; 
 				
 				isArrived = true;
 			},
