@@ -18,6 +18,7 @@ public class AdminPageHandler extends MainHandler {
 
 		final String url = split[0];
 		// final String queryString = split.length > 1 ? split[1] : "";
+		// final Map<String, String> params = parseQueryString(queryString);
 
 		if (exchange.getRequestMethod().equals("GET")) {
 

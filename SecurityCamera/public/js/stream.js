@@ -59,7 +59,7 @@ function updateContent() {
 			} else {
 
 				isStreamOn = false;
-				$('#stream').html('<span class="text-info">No streaming!</span>');
+				$('#stream').html('<div class="alert alert-info">No streaming!</div>');
 			}
 		}
 	});

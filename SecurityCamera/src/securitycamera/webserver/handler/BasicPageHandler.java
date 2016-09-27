@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,8 @@ public class BasicPageHandler extends MainHandler {
 		String[] split = exchange.getRequestURI().toString().split("[?]");
 
 		final String url = split[0];
-		// final String queryString = split.length > 1 ? split[1] : "";
+		final String queryString = split.length > 1 ? split[1] : "";
+		final Map<String, String> params = parseQueryString(queryString);
 
 		if (exchange.getRequestMethod().equals("GET")) {
 
@@ -45,6 +47,14 @@ public class BasicPageHandler extends MainHandler {
 
 				for (int i = 0; i < listOfFiles.length; i++) {
 					fileNames.add(listOfFiles[i].getName());
+				}
+
+				Collections.sort(fileNames);
+
+				if (params.size() > 0 && params.containsKey("latest")) {
+
+					int index = fileNames.indexOf(params.get("latest"));
+					fileNames = fileNames.subList(index + 1, fileNames.size());
 				}
 
 				sendObject(exchange, fileNames);

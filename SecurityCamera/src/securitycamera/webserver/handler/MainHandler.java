@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,6 +33,21 @@ public abstract class MainHandler implements HttpHandler {
 		responseBody.write(responseText.getBytes());
 		responseBody.flush();
 		responseBody.close();
+	}
+
+	protected final Map<String, String> parseQueryString(String queryString) {
+
+		Map<String, String> params = new HashMap<String, String>();
+
+		if (!queryString.equals("")) {
+
+			for (String entry : queryString.split("&")) {
+				String[] splittedEntry = entry.split("=");
+				params.put(splittedEntry[0], splittedEntry[1]);
+			}
+		}
+
+		return params;
 	}
 
 	protected final void sendStaticFile(HttpExchange exchange, Path path)
