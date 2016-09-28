@@ -182,7 +182,7 @@ public class CameraThread extends Thread {
 		return isStreaming;
 	}
 
-	public boolean motionDetectionEnabled() {
+	public boolean isMotionDetectionEnabled() {
 		return motionDetection;
 	}
 

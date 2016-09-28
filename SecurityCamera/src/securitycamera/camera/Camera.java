@@ -71,10 +71,10 @@ public class Camera {
 		return cameraThread == null ? false : cameraThread.isStreaming();
 	}
 
-	public boolean motionDetectionEnabled() {
+	public boolean isMotionDetectionEnabled() {
 
 		return cameraThread == null ? false
-				: cameraThread.motionDetectionEnabled();
+				: cameraThread.isMotionDetectionEnabled();
 	}
 
 	public void setStreaming(boolean isStreaming) {

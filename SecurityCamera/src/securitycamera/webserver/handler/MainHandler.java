@@ -126,7 +126,7 @@ public abstract class MainHandler implements HttpHandler {
 	protected final void sendNotFoundPage(HttpExchange exchange)
 			throws IOException {
 
-		LOGGER.info(exchange.getRequestMethod() + " request from "
+		LOGGER.warning(exchange.getRequestMethod() + " request from "
 				+ exchange.getRemoteAddress().getAddress().toString() + " to "
 				+ exchange.getRequestURI().toString() + " (" + 404 + ")");
 

@@ -1,4 +1,4 @@
-var FPS = 15;
+var FPS = 20;
 var isStreamOn = false;
 var isArrived = true;
 var $actualFrame;

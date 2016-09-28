@@ -1,0 +1,7 @@
+.borderless > tbody > tr > td {
+	border: none;
+}
+
+.marginless {
+	margin: 0px;
+}

@@ -1,11 +1,14 @@
 package securitycamera;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import securitycamera.camera.Camera;
 import securitycamera.camera.enums.OStype;
 import securitycamera.email.Email;
+import securitycamera.sig.SystemInformationGatherer;
 import securitycamera.webserver.Webserver;
 
 public class SecurityCamera {
@@ -17,21 +20,25 @@ public class SecurityCamera {
 
 	private static Camera camera;
 	private static Webserver webserver;
+	private static SystemInformationGatherer sig;
 
 	public static void main(String args[]) {
 
 		try {
 
 			camera = new Camera();
+			sig = new SystemInformationGatherer();
 			webserver = new Webserver();
 
 		} catch (IOException e) {
 
-			e.printStackTrace();
+			LOGGER.severe(e.getMessage());
 		}
 
-		LOGGER.info("Start modules on " + OS_TYPE.toString());
+		LOGGER.info("Start modules on " + OS_TYPE);
+
 		camera.start();
+		sig.start();
 		webserver.start();
 	}
 
@@ -55,20 +62,24 @@ public class SecurityCamera {
 		return camera.getLastFrameCopy();
 	}
 
-	public static boolean cameraIsRunning() {
+	public static boolean isCameraRunning() {
 		return camera.isRunning();
 	}
 
-	public static boolean cameraIsStreaming() {
+	public static boolean isCameraStreaming() {
 		return camera.isStreaming();
 	}
 
-	public static boolean cameraMotionDetectionEnabled() {
-		return camera.motionDetectionEnabled();
+	public static boolean isCameraMotionDetectionEnabled() {
+		return camera.isMotionDetectionEnabled();
 	}
 
 	public static String getEmailAdress() {
 		return Email.getEmailAddress();
+	}
+
+	public static List<Map<String, Object>> getSystemInformation() {
+		return sig.gatherInformations();
 	}
 
 	public static void setStreaming(boolean isStreaming) {

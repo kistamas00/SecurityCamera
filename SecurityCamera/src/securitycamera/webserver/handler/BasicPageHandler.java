@@ -68,45 +68,46 @@ public class BasicPageHandler extends MainHandler {
 			} else if (url.equals("/status")) {
 
 				Map<String, Object> data = new HashMap<String, Object>();
-				List<Map<String, Object>> status = new ArrayList<Map<String, Object>>();
+				List<Map<String, Object>> securityCameraStatus = new ArrayList<Map<String, Object>>();
 
 				Map<String, Object> e = new HashMap<String, Object>();
 				String id = "webserver";
 				e.put("id", id);
 				e.put("name", "Webserver");
 				e.put("value", "RUNNING");
-				status.add(e);
+				securityCameraStatus.add(e);
 				data.put(id, true);
 
 				e = new HashMap<String, Object>();
 				id = "camera";
 				e.put("id", id);
 				e.put("name", "Camera");
-				e.put("value", SecurityCamera.cameraIsRunning() ? "RUNNING"
+				e.put("value", SecurityCamera.isCameraRunning() ? "RUNNING"
 						: "STOPPED");
-				status.add(e);
-				data.put(id, SecurityCamera.cameraIsRunning());
+				securityCameraStatus.add(e);
+				data.put(id, SecurityCamera.isCameraRunning());
 
 				e = new HashMap<String, Object>();
 				id = "stream";
 				e.put("id", id);
 				e.put("name", "Streaming");
 				e.put("value",
-						SecurityCamera.cameraIsStreaming() ? "ON" : "OFF");
-				status.add(e);
-				data.put(id, SecurityCamera.cameraIsStreaming());
+						SecurityCamera.isCameraStreaming() ? "ON" : "OFF");
+				securityCameraStatus.add(e);
+				data.put(id, SecurityCamera.isCameraStreaming());
 
 				e = new HashMap<String, Object>();
 				id = "motionDetection";
 				e.put("id", id);
 				e.put("name", "Motion detection");
-				e.put("value", SecurityCamera.cameraMotionDetectionEnabled()
+				e.put("value", SecurityCamera.isCameraMotionDetectionEnabled()
 						? "ENABLED" : "DISABLED");
-				status.add(e);
-				data.put(id, SecurityCamera.cameraMotionDetectionEnabled());
+				securityCameraStatus.add(e);
+				data.put(id, SecurityCamera.isCameraMotionDetectionEnabled());
 
 				data.put("email", SecurityCamera.getEmailAdress());
-				data.put("status", status);
+				data.put("securityCameraStatus", securityCameraStatus);
+				data.put("systemStatus", SecurityCamera.getSystemInformation());
 
 				sendObject(exchange, data);
 

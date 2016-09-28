@@ -78,6 +78,9 @@ public class Email {
 			} catch (MessagingException e) {
 				throw new RuntimeException(e);
 			}
+
+		} else {
+			LOGGER.warning("E-mail address didn't set up yet!");
 		}
 	}
 
