@@ -5,11 +5,10 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -105,56 +104,15 @@ public abstract class MainHandler implements HttpHandler {
 		}
 	}
 
-	protected final void sendObject(HttpExchange exchange,
-			Map<String, Object> map) throws IOException {
-
-		// LOGGER.info(exchange.getRequestMethod() + " request from " +
-		// exchange.getRemoteAddress().getAddress().toString()
-		// + " to " + exchange.getRequestURI().toString() + " (" + 200 + ")");
-
-		String data = "{";
-
-		for (Entry<String, Object> e : map.entrySet()) {
-
-			Object o = e.getValue();
-
-			if (o instanceof Boolean) {
-				data += "\"" + e.getKey() + "\": " + e.getValue() + ",";
-			} else {
-				data += "\"" + e.getKey() + "\":\"" + e.getValue() + "\",";
-			}
-		}
-
-		if (map.size() > 0)
-			data = data.substring(0, data.length() - 1);
-		data = data + "}";
-
-		OutputStream responseBody = exchange.getResponseBody();
-
-		exchange.getResponseHeaders().add("content-type", "application/json");
-		exchange.sendResponseHeaders(200, data.length());
-		responseBody.write(data.getBytes());
-		responseBody.flush();
-		responseBody.close();
-	}
-
-	protected final void sendObject(HttpExchange exchange, List<String> list)
+	protected final void sendObject(HttpExchange exchange, Object object)
 			throws IOException {
 
 		// LOGGER.info(exchange.getRequestMethod() + " request from " +
 		// exchange.getRemoteAddress().getAddress().toString()
 		// + " to " + exchange.getRequestURI().toString() + " (" + 200 + ")");
 
-		String data = "[";
-
-		for (String e : list) {
-
-			data = data + "\"" + e + "\",";
-		}
-
-		if (list.size() > 0)
-			data = data.substring(0, data.length() - 1);
-		data = data + "]";
+		Gson gson = new Gson();
+		String data = gson.toJson(object);
 
 		OutputStream responseBody = exchange.getResponseBody();
 

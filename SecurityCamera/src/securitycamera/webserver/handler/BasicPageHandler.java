@@ -67,15 +67,48 @@ public class BasicPageHandler extends MainHandler {
 
 			} else if (url.equals("/status")) {
 
-				Map<String, Object> map = new HashMap<String, Object>();
+				Map<String, Object> data = new HashMap<String, Object>();
+				List<Map<String, Object>> status = new ArrayList<Map<String, Object>>();
 
-				map.put("camera", SecurityCamera.cameraIsRunning());
-				map.put("stream", SecurityCamera.cameraIsStreaming());
-				map.put("motionDetection",
-						SecurityCamera.cameraMotionDetectionEnabled());
-				map.put("email", SecurityCamera.getEmailAdress());
+				Map<String, Object> e = new HashMap<String, Object>();
+				String id = "webserver";
+				e.put("id", id);
+				e.put("name", "Webserver");
+				e.put("value", "RUNNING");
+				status.add(e);
+				data.put(id, true);
 
-				sendObject(exchange, map);
+				e = new HashMap<String, Object>();
+				id = "camera";
+				e.put("id", id);
+				e.put("name", "Camera");
+				e.put("value", SecurityCamera.cameraIsRunning() ? "RUNNING"
+						: "STOPPED");
+				status.add(e);
+				data.put(id, SecurityCamera.cameraIsRunning());
+
+				e = new HashMap<String, Object>();
+				id = "stream";
+				e.put("id", id);
+				e.put("name", "Streaming");
+				e.put("value",
+						SecurityCamera.cameraIsStreaming() ? "ON" : "OFF");
+				status.add(e);
+				data.put(id, SecurityCamera.cameraIsStreaming());
+
+				e = new HashMap<String, Object>();
+				id = "motionDetection";
+				e.put("id", id);
+				e.put("name", "Motion detection");
+				e.put("value", SecurityCamera.cameraMotionDetectionEnabled()
+						? "ENABLED" : "DISABLED");
+				status.add(e);
+				data.put(id, SecurityCamera.cameraMotionDetectionEnabled());
+
+				data.put("email", SecurityCamera.getEmailAdress());
+				data.put("status", status);
+
+				sendObject(exchange, data);
 
 			} else if (url.startsWith("/public/") && !url.endsWith("/")) {
 

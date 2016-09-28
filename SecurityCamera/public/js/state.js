@@ -11,26 +11,27 @@ function updateContent() {
 		type: 'GET',
 		success: function(json){
 			
-			if (json.camera) {
-				$('#camera-status').html('RUNNING');
-				$('#camera-status').attr('class', 'label label-success');
-			} else {
-				$('#camera-status').html('STOPPED');
-				$('#camera-status').attr('class', 'label label-danger');
-			}
-			if (json.stream) {
-				$('#streaming-status').html('ON');
-				$('#streaming-status').attr('class', 'label label-success');
-			} else {
-				$('#streaming-status').html('OFF');
-				$('#streaming-status').attr('class', 'label label-danger');
-			}
-			if (json.motionDetection) {
-				$('#motion-detection-status').html('ENABLED');
-				$('#motion-detection-status').attr('class', 'label label-success');
-			} else {
-				$('#motion-detection-status').html('DISABLED');
-				$('#motion-detection-status').attr('class', 'label label-danger');
+			var $tableBody = $('#table-body');
+			$tableBody.html('');
+
+			for (i in json.status) {
+				var element = json.status[i];
+
+				var $trElement = $('<tr>');
+				var $tdElement = $('<td>');
+				var $spanElement = $('<span>');
+				
+				if (json[element.id] === true)
+					$spanElement.attr('class', 'label label-success');
+				else if (json[element.id] === false)
+					$spanElement.attr('class', 'label label-danger');
+
+				$trElement.html('<td>'+element.name+'</td>');
+				$trElement.append($tdElement);
+				$tdElement.append($spanElement);
+				$spanElement.html(element.value);
+
+				$tableBody.append($trElement);
 			}
 		}
 	});
