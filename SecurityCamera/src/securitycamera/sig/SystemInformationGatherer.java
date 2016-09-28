@@ -12,6 +12,7 @@ import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
+import securitycamera.SecurityCamera;
 import securitycamera.webserver.Webserver;
 
 public class SystemInformationGatherer {
@@ -56,9 +57,19 @@ public class SystemInformationGatherer {
 
 					Map<String, Object> data = new HashMap<String, Object>();
 
+					String cpuName = null;
+					switch (SecurityCamera.OS_TYPE) {
+					case LINUX:
+						cpuName = "CPU (#" + (i + 1) + ")";
+						break;
+					case WINDOWS:
+						cpuName = cpuInfo.getVendor() + " " + cpuInfo.getModel()
+								+ " (#" + (i + 1) + ")";
+						break;
+					}
+
 					data.put("id", "cpuCore" + i);
-					data.put("name", cpuInfo.getVendor() + " "
-							+ cpuInfo.getModel() + " (#" + (i + 1) + ")");
+					data.put("name", cpuName);
 					data.put("type", "PROGRESSBAR");
 					data.put("value", Math.round(cpuPerc.getCombined() * 100));
 

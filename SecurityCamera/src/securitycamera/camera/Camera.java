@@ -18,7 +18,8 @@ public class Camera {
 
 		switch (SecurityCamera.OS_TYPE) {
 		case LINUX:
-			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+			System.load(System.getProperty("user.dir") + File.separator + "lib"
+					+ Core.NATIVE_LIBRARY_NAME + ".so");
 			break;
 		case WINDOWS:
 			System.load(System.getProperty("user.dir") + File.separator
