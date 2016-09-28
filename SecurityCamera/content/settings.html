@@ -63,12 +63,14 @@
 							<tr>
 								<td>Send e-mail to:</td>
 								<td>
-									<div class="input-group input-group-sm">
-										<input id="email-input" type="email" class="form-control">
-										<span class="input-group-btn">
-											<button id="email-set-button" class="btn btn-primary" type="button">Set e-mail</button>
-										</span>
-									</div>
+									<form action="/admin/email" method="post">
+										<div class="input-group input-group-sm">
+											<input id="email-input" type="email" class="form-control" name="email">
+											<span class="input-group-btn">
+												<button type="submit" class="btn btn-primary">Set e-mail</button>
+											</span>
+										</div>
+									</form>
 								</td>
 							</tr>
 							<tr>

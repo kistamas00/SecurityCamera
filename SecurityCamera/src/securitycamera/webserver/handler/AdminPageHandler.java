@@ -78,10 +78,14 @@ public class AdminPageHandler extends MainHandler {
 
 				br.close();
 
-				String email = sb.toString().split("=")[1].replaceAll("%40",
-						"@");
+				if (sb.toString().startsWith("email=")
+						&& sb.toString().length() > "email=".length()) {
 
-				SecurityCamera.setEmailAdress(email);
+					String email = sb.toString().split("=")[1].replaceAll("%40",
+							"@");
+
+					SecurityCamera.setEmailAdress(email);
+				}
 			}
 
 			redirect(exchange, "/admin");

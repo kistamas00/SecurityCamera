@@ -71,18 +71,6 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('#email-set-button').click(function() {
-		
-		$.ajax({
-			url: '/admin/email',
-			type: 'POST',
-			data: {
-				email: $('#email-input').val()
-			},
-			success: updateContent
-		});
-	});
-	
 	webserverSwitch.bootstrapSwitch();
 	cameraSwitch.bootstrapSwitch();
 	streamingSwitch.bootstrapSwitch();
