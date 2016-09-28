@@ -91,6 +91,10 @@ function updateContent() {
 									'id':element.id,
 									'class':'label label-danger'
 								});
+							} else {
+								$spanElement.attr({
+									'id':element.id
+								});
 							}
 
 							$trElement.html('<td>'+element.name+'</td>');
@@ -139,6 +143,10 @@ function updateContent() {
 								$spanElement.attr({
 									'id':element.id,
 									'class':'label label-danger'
+								});
+							} else {
+								$spanElement.attr({
+									'id':element.id
 								});
 							}
 

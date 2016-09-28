@@ -57,8 +57,8 @@ public class SystemInformationGatherer {
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("id", "cpuCore" + i);
-					data.put("name",
-							cpuInfo.getVendor() + " " + cpuInfo.getModel());
+					data.put("name", cpuInfo.getVendor() + " "
+							+ cpuInfo.getModel() + " (#" + (i + 1) + ")");
 					data.put("type", "PROGRESSBAR");
 					data.put("value", Math.round(cpuPerc.getCombined() * 100));
 

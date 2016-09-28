@@ -105,7 +105,14 @@ public class BasicPageHandler extends MainHandler {
 				securityCameraStatus.add(e);
 				data.put(id, SecurityCamera.isCameraMotionDetectionEnabled());
 
-				data.put("email", SecurityCamera.getEmailAdress());
+				e = new HashMap<String, Object>();
+				id = "email";
+				e.put("id", id);
+				e.put("name", "E-mail");
+				e.put("value", SecurityCamera.getEmailAdress());
+				securityCameraStatus.add(e);
+				data.put(id, SecurityCamera.getEmailAdress());
+
 				data.put("securityCameraStatus", securityCameraStatus);
 				data.put("systemStatus", SecurityCamera.getSystemInformation());
 

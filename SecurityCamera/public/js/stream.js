@@ -63,6 +63,8 @@ function updateContent() {
 				
 				if (isStreamOn === false) {
 					
+					$('#stream').html('');
+
 					isStreamOn = true;
 					isArrived = true;
 					getStream();
