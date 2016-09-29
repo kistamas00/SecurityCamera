@@ -1,6 +1,9 @@
 package securitycamera.camera;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -35,6 +38,7 @@ public class CameraThread extends Thread {
 	private volatile boolean motionDetection;
 	private volatile boolean motionDetected;
 
+	private int picureLimit;
 	private long detectionTimeLimit;
 	private Object previousFrameLockObject;
 
@@ -46,6 +50,7 @@ public class CameraThread extends Thread {
 		motionDetection = false;
 		motionDetected = false;
 
+		picureLimit = 3;
 		detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
 		previousFrameLockObject = new Object();
 	}
@@ -109,7 +114,7 @@ public class CameraThread extends Thread {
 					motionDetected = true;
 					detectionTimeLimit *= 2;
 
-					LOGGER.info("Motion detected, next time limit: "
+					LOGGER.warning("Motion detected, next time limit: "
 							+ detectionTimeLimit + " ms");
 
 					previousDetection = System.currentTimeMillis();
@@ -121,15 +126,37 @@ public class CameraThread extends Thread {
 				DateFormat dateFormat = new SimpleDateFormat(
 						"yyyy-MM-dd-HH-mm-ss");
 				String fileName = dateFormat.format(new Date()) + ".jpg";
-				String path = "public" + File.separator + "pictures"
-						+ File.separator + fileName;
+				String path = "public" + File.separator + fileName;
 
 				Imgcodecs.imwrite(path, frame);
 
-				LOGGER.info("Photo created: " + fileName);
-
 				if (motionDetected) {
 					Email.sendEmail(new File(path));
+				}
+
+				int numberOfPictures = new File(
+						"public" + File.separator + "pictures")
+								.listFiles().length;
+
+				if (numberOfPictures <= picureLimit) {
+
+					String newPath = "public" + File.separator + "picures"
+							+ File.separator + fileName;
+					try {
+						Files.move(Paths.get(path), Paths.get(newPath));
+					} catch (IOException e) {
+						LOGGER.severe(e.getMessage());
+					}
+
+					LOGGER.info("Photo created: " + fileName);
+
+				} else {
+
+					File picture = new File(path);
+					picture.delete();
+
+					LOGGER.info("Photo limit reached! Photo (" + fileName
+							+ ") has been deleted!");
 				}
 
 				saveNext = false;

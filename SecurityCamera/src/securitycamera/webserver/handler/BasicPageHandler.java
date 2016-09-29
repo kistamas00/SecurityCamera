@@ -45,8 +45,8 @@ public class BasicPageHandler extends MainHandler {
 				File[] listOfFiles = folder.listFiles();
 				List<String> fileNames = new ArrayList<String>();
 
-				for (int i = 0; i < listOfFiles.length; i++) {
-					fileNames.add(listOfFiles[i].getName());
+				for (File file : listOfFiles) {
+					fileNames.add(file.getName());
 				}
 
 				Collections.sort(fileNames);
