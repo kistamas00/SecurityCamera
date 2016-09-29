@@ -199,8 +199,15 @@ public class CameraThread extends Thread {
 	}
 
 	public int getPhotoLimitPerc() {
-		return (int) Math
-				.round(((double) getNumberOfPictures() / picureLimit) * 100);
+
+		int numberOfPictures = getNumberOfPictures();
+
+		if (numberOfPictures == 0 && picureLimit == 0) {
+			return 100;
+		} else {
+			return (int) Math
+					.round(((double) numberOfPictures / picureLimit) * 100);
+		}
 	}
 
 	public void saveNextFrame() {
