@@ -62,6 +62,14 @@ public class SecurityCamera {
 		return camera.getLastFrameCopy();
 	}
 
+	public static int getPhotoLimit() {
+		return camera.getPhotoLimit();
+	}
+
+	public static int getPhotoLimitPerc() {
+		return camera.getPhotoLimitPerc();
+	}
+
 	public static boolean isCameraRunning() {
 		return camera.isRunning();
 	}
@@ -88,6 +96,10 @@ public class SecurityCamera {
 
 	public static void setMotionDetection(boolean motionDetection) {
 		camera.setMotionDetection(motionDetection);
+	}
+
+	public static void setPhotoLimit(int photoLimit) {
+		camera.setPhotoLimit(photoLimit);
 	}
 
 	public static void setEmailAdress(String emailAddress) {

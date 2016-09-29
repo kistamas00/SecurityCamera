@@ -97,6 +97,10 @@ function updateContent() {
 			if ($('#email-input').val() === '') {
 				$('#email-input').val(json.email);
 			}
+
+			if ($('#photolimit-input').val() === '') {
+				$('#photolimit-input').val(json.photoLimit);
+			}
 		}
 	});
 }

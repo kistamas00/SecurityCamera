@@ -62,31 +62,36 @@ public class Camera {
 				: cameraThread.getLastFrameCopy();
 	}
 
-	public boolean isRunning() {
+	public int getPhotoLimit() {
+		return cameraThread.getPhotoLimit();
+	}
 
+	public int getPhotoLimitPerc() {
+		return cameraThread.getPhotoLimitPerc();
+	}
+
+	public boolean isRunning() {
 		return cameraThread != null;
 	}
 
 	public boolean isStreaming() {
-
 		return cameraThread == null ? false : cameraThread.isStreaming();
 	}
 
 	public boolean isMotionDetectionEnabled() {
-
 		return cameraThread == null ? false
 				: cameraThread.isMotionDetectionEnabled();
 	}
 
 	public void setStreaming(boolean isStreaming) {
-
 		cameraThread.setStreaming(isStreaming);
-		;
 	}
 
 	public void setMotionDetection(boolean motionDetection) {
-
 		cameraThread.setMotionDetection(motionDetection);
 	}
 
+	public void setPhotoLimit(int photoLimit) {
+		cameraThread.setPhotoLimit(photoLimit);
+	}
 }

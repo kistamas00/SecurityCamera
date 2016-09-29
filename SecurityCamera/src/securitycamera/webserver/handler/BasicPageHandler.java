@@ -113,6 +113,15 @@ public class BasicPageHandler extends MainHandler {
 				securityCameraStatus.add(e);
 				data.put(id, SecurityCamera.getEmailAdress());
 
+				e = new HashMap<String, Object>();
+				id = "photoLimit";
+				e.put("id", id);
+				e.put("name", "Photo limit");
+				e.put("type", "PROGRESSBAR");
+				e.put("value", SecurityCamera.getPhotoLimitPerc());
+				securityCameraStatus.add(e);
+				data.put(id, SecurityCamera.getPhotoLimit());
+
 				data.put("securityCameraStatus", securityCameraStatus);
 				data.put("systemStatus", SecurityCamera.getSystemInformation());
 

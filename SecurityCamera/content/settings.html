@@ -61,6 +61,19 @@
 								<td id="motion-detection-switch-container"></td>
 							</tr>
 							<tr>
+								<td>Photo limit:</td>
+								<td>
+									<form action="/admin/photolimit" method="post">
+										<div class="input-group input-group-sm">
+											<input id="photolimit-input" type="number" class="form-control" name="photolimit" min="0">
+											<span class="input-group-btn">
+												<button type="submit" class="btn btn-primary">Set limit</button>
+											</span>
+										</div>
+									</form>
+								</td>
+							</tr>
+							<tr>
 								<td>Send e-mail to:</td>
 								<td>
 									<form action="/admin/email" method="post">

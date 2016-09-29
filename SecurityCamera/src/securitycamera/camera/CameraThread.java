@@ -1,9 +1,6 @@
 package securitycamera.camera;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -37,8 +34,8 @@ public class CameraThread extends Thread {
 	private volatile boolean saveNext;
 	private volatile boolean motionDetection;
 	private volatile boolean motionDetected;
+	private volatile int picureLimit;
 
-	private int picureLimit;
 	private long detectionTimeLimit;
 	private Object previousFrameLockObject;
 
@@ -50,7 +47,7 @@ public class CameraThread extends Thread {
 		motionDetection = false;
 		motionDetected = false;
 
-		picureLimit = 3;
+		picureLimit = 20;
 		detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
 		previousFrameLockObject = new Object();
 	}
@@ -134,19 +131,14 @@ public class CameraThread extends Thread {
 					Email.sendEmail(new File(path));
 				}
 
-				int numberOfPictures = new File(
-						"public" + File.separator + "pictures")
-								.listFiles().length;
+				int numberOfPictures = getNumberOfPictures();
 
-				if (numberOfPictures <= picureLimit) {
+				if (numberOfPictures < picureLimit) {
 
-					String newPath = "public" + File.separator + "picures"
+					String newPath = "public" + File.separator + "pictures"
 							+ File.separator + fileName;
-					try {
-						Files.move(Paths.get(path), Paths.get(newPath));
-					} catch (IOException e) {
-						LOGGER.severe(e.getMessage());
-					}
+					File picture = new File(path);
+					picture.renameTo(new File(newPath));
 
 					LOGGER.info("Photo created: " + fileName);
 
@@ -155,7 +147,7 @@ public class CameraThread extends Thread {
 					File picture = new File(path);
 					picture.delete();
 
-					LOGGER.info("Photo limit reached! Photo (" + fileName
+					LOGGER.warning("Photo limit reached! Photo (" + fileName
 							+ ") has been deleted!");
 				}
 
@@ -182,6 +174,11 @@ public class CameraThread extends Thread {
 		}
 	}
 
+	private int getNumberOfPictures() {
+		return new File("public" + File.separator + "pictures")
+				.listFiles().length;
+	}
+
 	public byte[] getLastFrameCopy() {
 
 		MatOfByte mob = new MatOfByte();
@@ -195,6 +192,15 @@ public class CameraThread extends Thread {
 		byte[] encodedMat = Base64.getEncoder().encode(mob.toArray());
 
 		return encodedMat;
+	}
+
+	public int getPhotoLimit() {
+		return picureLimit;
+	}
+
+	public int getPhotoLimitPerc() {
+		return (int) Math
+				.round(((double) getNumberOfPictures() / picureLimit) * 100);
 	}
 
 	public void saveNextFrame() {
@@ -224,5 +230,12 @@ public class CameraThread extends Thread {
 		}
 
 		this.motionDetection = motionDetection;
+	}
+
+	public void setPhotoLimit(int photoLimit) {
+
+		if (photoLimit >= getNumberOfPictures()) {
+			picureLimit = photoLimit;
+		}
 	}
 }

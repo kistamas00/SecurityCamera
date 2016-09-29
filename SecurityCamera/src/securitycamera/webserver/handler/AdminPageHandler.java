@@ -65,6 +65,27 @@ public class AdminPageHandler extends MainHandler {
 
 				SecurityCamera.capturePhoto();
 
+			} else if (url.equals("/admin/photolimit")) {
+
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(exchange.getRequestBody()));
+				StringBuffer sb = new StringBuffer();
+				String line = null;
+
+				while ((line = br.readLine()) != null) {
+					sb.append(line);
+				}
+
+				br.close();
+
+				if (sb.toString().startsWith("photolimit=")
+						&& sb.toString().length() > "photolimit=".length()) {
+
+					int photoLimit = Integer
+							.parseInt(sb.toString().split("=")[1]);
+
+					SecurityCamera.setPhotoLimit(photoLimit);
+				}
 			} else if (url.equals("/admin/email")) {
 
 				BufferedReader br = new BufferedReader(
