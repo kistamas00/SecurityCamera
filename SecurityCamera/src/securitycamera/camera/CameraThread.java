@@ -3,8 +3,11 @@ package securitycamera.camera;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.opencv.core.Core;
@@ -123,7 +126,8 @@ public class CameraThread extends Thread {
 				DateFormat dateFormat = new SimpleDateFormat(
 						"yyyy-MM-dd-HH-mm-ss");
 				String fileName = dateFormat.format(new Date()) + ".jpg";
-				String path = "public" + File.separator + fileName;
+				String path = "public" + File.separator + "pictures"
+						+ File.separator + fileName;
 
 				Imgcodecs.imwrite(path, frame);
 
@@ -133,22 +137,28 @@ public class CameraThread extends Thread {
 
 				int numberOfPictures = getNumberOfPictures();
 
-				if (numberOfPictures < picureLimit) {
-
-					String newPath = "public" + File.separator + "pictures"
-							+ File.separator + fileName;
-					File picture = new File(path);
-					picture.renameTo(new File(newPath));
+				if (numberOfPictures <= picureLimit) {
 
 					LOGGER.info("Photo created: " + fileName);
 
 				} else {
 
-					File picture = new File(path);
+					File[] fileList = new File(
+							"public" + File.separator + "pictures").listFiles();
+					List<String> fileNames = new ArrayList<String>();
+
+					for (File f : fileList) {
+						fileNames.add(f.getName());
+					}
+
+					Collections.sort(fileNames);
+
+					File picture = new File("public" + File.separator
+							+ "pictures" + File.separator + fileNames.get(0));
 					picture.delete();
 
-					LOGGER.warning("Photo limit reached! Photo (" + fileName
-							+ ") has been deleted!");
+					LOGGER.warning("Photo limit reached! Photo ("
+							+ fileNames.get(0) + ") has been deleted!");
 				}
 
 				saveNext = false;
