@@ -1,4 +1,4 @@
-package securitycamera.camera;
+package securitycamera.module.camera;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -17,13 +17,13 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
 import securitycamera.SecurityCamera;
-import securitycamera.camera.enums.OStype;
 import securitycamera.email.Email;
+import securitycamera.module.camera.enums.OStype;
 
 public class CameraThread extends Thread {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(CameraThread.class.getName());
+			.getLogger(CameraThread.class.getCanonicalName());
 	private final static int FPS = 25;
 	private final static double DIFF_LIMIT = 1.75;
 	private final static long DETECTION_TIME_LIMIT_DEFAULT = 1000;

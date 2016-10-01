@@ -1,4 +1,4 @@
-package securitycamera.sig;
+package securitycamera.module.sig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +13,16 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
 import securitycamera.SecurityCamera;
+import securitycamera.module.SecurityCameraModule;
 import securitycamera.webserver.Webserver;
 
-public class SystemInformationGatherer {
+public class SystemInformationGatherer extends SecurityCameraModule {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(Webserver.class.getName());
+			.getLogger(Webserver.class.getCanonicalName());
 	private Sigar sigar;
 
+	@Override
 	public void start() {
 
 		if (sigar == null) {
@@ -31,6 +33,7 @@ public class SystemInformationGatherer {
 		}
 	}
 
+	@Override
 	public void stop() {
 
 		LOGGER.info("Stop " + this.getClass().getSimpleName());

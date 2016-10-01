@@ -1,108 +1,34 @@
 package securitycamera;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import securitycamera.camera.Camera;
-import securitycamera.camera.enums.OStype;
-import securitycamera.email.Email;
-import securitycamera.sig.SystemInformationGatherer;
+import securitycamera.module.SecurityCameraModule;
+import securitycamera.module.SecurityCameraModuleContainer;
+import securitycamera.module.camera.Camera;
+import securitycamera.module.camera.enums.OStype;
+import securitycamera.module.sig.SystemInformationGatherer;
 import securitycamera.webserver.Webserver;
 
 public class SecurityCamera {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(SecurityCamera.class.getName());
+			.getLogger(SecurityCamera.class.getCanonicalName());
 	public final static OStype OS_TYPE = OStype
 			.valueOf(System.getProperty("os.name").split(" ")[0].toUpperCase());
-
-	private static Camera camera;
-	private static Webserver webserver;
-	private static SystemInformationGatherer sig;
+	private final static SecurityCameraModuleContainer MODULES = new SecurityCameraModuleContainer();
 
 	public static void main(String args[]) {
 
-		try {
-
-			camera = new Camera();
-			sig = new SystemInformationGatherer();
-			webserver = new Webserver();
-
-		} catch (IOException e) {
-
-			LOGGER.severe(e.getMessage());
-		}
+		MODULES.addModule(new Camera());
+		MODULES.addModule(new Webserver());
+		MODULES.addModule(new SystemInformationGatherer());
 
 		LOGGER.info("Start modules on " + OS_TYPE);
 
-		camera.start();
-		sig.start();
-		webserver.start();
+		MODULES.startAll();
 	}
 
-	public static void stopWebserver() {
-		webserver.stop();
-	}
-
-	public static void startCamera() {
-		camera.start();
-	}
-
-	public static void stopCamera() {
-		camera.stop();
-	}
-
-	public static void capturePhoto() {
-		camera.capturePhoto();
-	}
-
-	public static byte[] getLastFrameCopy() {
-		return camera.getLastFrameCopy();
-	}
-
-	public static int getPhotoLimit() {
-		return camera.getPhotoLimit();
-	}
-
-	public static int getPhotoLimitPerc() {
-		return camera.getPhotoLimitPerc();
-	}
-
-	public static boolean isCameraRunning() {
-		return camera.isRunning();
-	}
-
-	public static boolean isCameraStreaming() {
-		return camera.isStreaming();
-	}
-
-	public static boolean isCameraMotionDetectionEnabled() {
-		return camera.isMotionDetectionEnabled();
-	}
-
-	public static String getEmailAdress() {
-		return Email.getEmailAddress();
-	}
-
-	public static List<Map<String, Object>> getSystemInformation() {
-		return sig.gatherInformations();
-	}
-
-	public static void setStreaming(boolean isStreaming) {
-		camera.setStreaming(isStreaming);
-	}
-
-	public static void setMotionDetection(boolean motionDetection) {
-		camera.setMotionDetection(motionDetection);
-	}
-
-	public static void setPhotoLimit(int photoLimit) {
-		camera.setPhotoLimit(photoLimit);
-	}
-
-	public static void setEmailAdress(String emailAddress) {
-		Email.setEmailAddress(emailAddress);
+	public static <T extends SecurityCameraModule> T getModule(Class<T> c) {
+		return MODULES.getModule(c);
 	}
 }

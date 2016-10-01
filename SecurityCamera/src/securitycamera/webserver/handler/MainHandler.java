@@ -15,7 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
 public abstract class MainHandler implements HttpHandler {
 
 	private static Logger LOGGER = Logger
-			.getLogger(MainHandler.class.getName());
+			.getLogger(MainHandler.class.getCanonicalName());
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {

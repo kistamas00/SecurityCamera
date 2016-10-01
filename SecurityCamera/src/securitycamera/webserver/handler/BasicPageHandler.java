@@ -13,11 +13,18 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 
 import securitycamera.SecurityCamera;
+import securitycamera.email.Email;
+import securitycamera.module.camera.Camera;
+import securitycamera.module.sig.SystemInformationGatherer;
 
 public class BasicPageHandler extends MainHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
+
+		final Camera CAMERA = SecurityCamera.getModule(Camera.class);
+		final SystemInformationGatherer SIG = SecurityCamera
+				.getModule(SystemInformationGatherer.class);
 
 		String[] split = exchange.getRequestURI().toString().split("[?]");
 
@@ -55,7 +62,7 @@ public class BasicPageHandler extends MainHandler {
 
 			} else if (url.equals("/stream/next")) {
 
-				byte[] b = SecurityCamera.getLastFrameCopy();
+				byte[] b = CAMERA.getLastFrameCopy();
 
 				sendEncodedImage(exchange, b);
 
@@ -76,48 +83,46 @@ public class BasicPageHandler extends MainHandler {
 				id = "camera";
 				e.put("id", id);
 				e.put("name", "Camera");
-				e.put("value", SecurityCamera.isCameraRunning() ? "RUNNING"
-						: "STOPPED");
+				e.put("value", CAMERA.isRunning() ? "RUNNING" : "STOPPED");
 				securityCameraStatus.add(e);
-				data.put(id, SecurityCamera.isCameraRunning());
+				data.put(id, CAMERA.isRunning());
 
 				e = new HashMap<String, Object>();
 				id = "stream";
 				e.put("id", id);
 				e.put("name", "Streaming");
-				e.put("value",
-						SecurityCamera.isCameraStreaming() ? "ON" : "OFF");
+				e.put("value", CAMERA.isStreaming() ? "ON" : "OFF");
 				securityCameraStatus.add(e);
-				data.put(id, SecurityCamera.isCameraStreaming());
+				data.put(id, CAMERA.isStreaming());
 
 				e = new HashMap<String, Object>();
 				id = "motionDetection";
 				e.put("id", id);
 				e.put("name", "Motion detection");
-				e.put("value", SecurityCamera.isCameraMotionDetectionEnabled()
-						? "ENABLED" : "DISABLED");
+				e.put("value", CAMERA.isMotionDetectionEnabled() ? "ENABLED"
+						: "DISABLED");
 				securityCameraStatus.add(e);
-				data.put(id, SecurityCamera.isCameraMotionDetectionEnabled());
+				data.put(id, CAMERA.isMotionDetectionEnabled());
 
 				e = new HashMap<String, Object>();
 				id = "email";
 				e.put("id", id);
 				e.put("name", "E-mail");
-				e.put("value", SecurityCamera.getEmailAdress());
+				e.put("value", Email.getEmailAddress());
 				securityCameraStatus.add(e);
-				data.put(id, SecurityCamera.getEmailAdress());
+				data.put(id, Email.getEmailAddress());
 
 				e = new HashMap<String, Object>();
 				id = "photoLimit";
 				e.put("id", id);
 				e.put("name", "Photo limit");
 				e.put("type", "PROGRESSBAR");
-				e.put("value", SecurityCamera.getPhotoLimitPerc());
+				e.put("value", CAMERA.getPhotoLimitPerc());
 				securityCameraStatus.add(e);
-				data.put(id, SecurityCamera.getPhotoLimit());
+				data.put(id, CAMERA.getPhotoLimit());
 
 				data.put("securityCameraStatus", securityCameraStatus);
-				data.put("systemStatus", SecurityCamera.getSystemInformation());
+				data.put("systemStatus", SIG.gatherInformations());
 
 				sendObject(exchange, data);
 

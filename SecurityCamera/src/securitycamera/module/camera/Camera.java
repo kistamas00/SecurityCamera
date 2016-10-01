@@ -1,4 +1,4 @@
-package securitycamera.camera;
+package securitycamera.module.camera;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -6,11 +6,12 @@ import java.util.logging.Logger;
 import org.opencv.core.Core;
 
 import securitycamera.SecurityCamera;
+import securitycamera.module.SecurityCameraModule;
 
-public class Camera {
+public class Camera extends SecurityCameraModule {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(Camera.class.getName());
+			.getLogger(Camera.class.getCanonicalName());
 
 	private CameraThread cameraThread;
 
@@ -28,6 +29,7 @@ public class Camera {
 		}
 	}
 
+	@Override
 	public void start() {
 
 		if (cameraThread == null) {
@@ -39,6 +41,7 @@ public class Camera {
 		}
 	}
 
+	@Override
 	public void stop() {
 
 		if (cameraThread != null) {

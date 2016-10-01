@@ -8,11 +8,17 @@ import java.nio.file.Paths;
 import com.sun.net.httpserver.HttpExchange;
 
 import securitycamera.SecurityCamera;
+import securitycamera.email.Email;
+import securitycamera.module.camera.Camera;
+import securitycamera.webserver.Webserver;
 
 public class AdminPageHandler extends MainHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
+
+		final Webserver WEBSERVER = SecurityCamera.getModule(Webserver.class);
+		final Camera CAMERA = SecurityCamera.getModule(Camera.class);
 
 		String[] split = exchange.getRequestURI().toString().split("[?]");
 
@@ -35,35 +41,35 @@ public class AdminPageHandler extends MainHandler {
 
 			if (url.equals("/admin/webserver/stop")) {
 
-				SecurityCamera.stopWebserver();
+				WEBSERVER.stop();
 
 			} else if (url.equals("/admin/camera/start")) {
 
-				SecurityCamera.startCamera();
+				CAMERA.start();
 
 			} else if (url.equals("/admin/camera/stop")) {
 
-				SecurityCamera.stopCamera();
+				CAMERA.stop();
 
 			} else if (url.equals("/admin/camera/stream/on")) {
 
-				SecurityCamera.setStreaming(true);
+				CAMERA.setStreaming(true);
 
 			} else if (url.equals("/admin/camera/stream/off")) {
 
-				SecurityCamera.setStreaming(false);
+				CAMERA.setStreaming(false);
 
 			} else if (url.equals("/admin/camera/motiondetection/enable")) {
 
-				SecurityCamera.setMotionDetection(true);
+				CAMERA.setMotionDetection(true);
 
 			} else if (url.equals("/admin/camera/motiondetection/disable")) {
 
-				SecurityCamera.setMotionDetection(false);
+				CAMERA.setMotionDetection(false);
 
 			} else if (url.equals("/admin/camera/capture/photo")) {
 
-				SecurityCamera.capturePhoto();
+				CAMERA.capturePhoto();
 
 			} else if (url.equals("/admin/photolimit")) {
 
@@ -84,7 +90,7 @@ public class AdminPageHandler extends MainHandler {
 					int photoLimit = Integer
 							.parseInt(sb.toString().split("=")[1]);
 
-					SecurityCamera.setPhotoLimit(photoLimit);
+					CAMERA.setPhotoLimit(photoLimit);
 				}
 			} else if (url.equals("/admin/email")) {
 
@@ -105,7 +111,7 @@ public class AdminPageHandler extends MainHandler {
 					String email = sb.toString().split("=")[1].replaceAll("%40",
 							"@");
 
-					SecurityCamera.setEmailAdress(email);
+					Email.setEmailAddress(email);
 				}
 			}
 

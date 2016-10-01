@@ -23,7 +23,7 @@ import javax.mail.internet.MimeMultipart;
 public class Email {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(Email.class.getName());
+			.getLogger(Email.class.getCanonicalName());
 
 	private final static String USERNAME = "scameraemail@gmail.com";
 	private final static String PASSWORD = "securitycamerapass";
