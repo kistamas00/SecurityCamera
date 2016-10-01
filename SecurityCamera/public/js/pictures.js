@@ -27,12 +27,12 @@ function updateContent() {
 				var $children = $div.children('div');
 				var diplayedPictures = {};
 				for (var i = 0; i < $children.length; i++) {
-					var $element = $children[i];
+					var $element = $children.eq(i);
 
-					if (json.indexOf($element.id) === -1) {
+					if (json.indexOf($element.attr('id')) === -1) {
 						$element.remove();
 					} else {
-						diplayedPictures[$element.id] = 1;
+						diplayedPictures[$element.attr('id')] = 1;
 					}
 				}
 
