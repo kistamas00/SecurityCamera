@@ -13,8 +13,9 @@ public class Camera extends SecurityCameraModule {
 	private final static Logger LOGGER = Logger
 			.getLogger(Camera.class.getCanonicalName());
 
+	private static int pictureLimit = 20;
+
 	private CameraThread cameraThread;
-	private Integer pictureLimit;
 
 	public Camera() {
 
@@ -28,8 +29,6 @@ public class Camera extends SecurityCameraModule {
 					+ Core.NATIVE_LIBRARY_NAME + ".dll");
 			break;
 		}
-
-		this.pictureLimit = 20;
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class Camera extends SecurityCameraModule {
 
 		if (cameraThread == null) {
 
-			cameraThread = new CameraThread(pictureLimit);
+			cameraThread = new CameraThread();
 
 			LOGGER.info("Start " + this.getClass().getSimpleName());
 			cameraThread.start();
@@ -60,7 +59,11 @@ public class Camera extends SecurityCameraModule {
 				.listFiles().length;
 	}
 
-	public int getPhotoLimitPerc() {
+	public static int getPhotoLimit() {
+		return pictureLimit;
+	}
+
+	public static int getPhotoLimitPerc() {
 
 		int numberOfPictures = getNumberOfPictures();
 
@@ -85,10 +88,6 @@ public class Camera extends SecurityCameraModule {
 				: cameraThread.getLastFrameCopy();
 	}
 
-	public int getPhotoLimit() {
-		return pictureLimit;
-	}
-
 	public boolean isRunning() {
 		return cameraThread != null;
 	}
@@ -102,6 +101,13 @@ public class Camera extends SecurityCameraModule {
 				: cameraThread.isMotionDetectionEnabled();
 	}
 
+	public static void setPhotoLimit(int photoLimit) {
+
+		if (photoLimit >= getNumberOfPictures()) {
+			pictureLimit = photoLimit;
+		}
+	}
+
 	public void setStreaming(boolean isStreaming) {
 
 		if (cameraThread != null) {
@@ -110,15 +116,9 @@ public class Camera extends SecurityCameraModule {
 	}
 
 	public void setMotionDetection(boolean motionDetection) {
+
 		if (cameraThread != null) {
 			cameraThread.setMotionDetection(motionDetection);
-		}
-	}
-
-	public void setPhotoLimit(int photoLimit) {
-
-		if (photoLimit >= getNumberOfPictures()) {
-			pictureLimit = photoLimit;
 		}
 	}
 }

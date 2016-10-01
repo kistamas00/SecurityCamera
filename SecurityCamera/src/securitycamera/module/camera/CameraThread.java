@@ -40,9 +40,8 @@ public class CameraThread extends Thread {
 
 	private long detectionTimeLimit;
 	private Object previousFrameLockObject;
-	private Integer pictureLimit;
 
-	public CameraThread(Integer pictureLimit) {
+	public CameraThread() {
 
 		this.isRunning = false;
 		this.isStreaming = false;
@@ -52,7 +51,6 @@ public class CameraThread extends Thread {
 
 		this.detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
 		this.previousFrameLockObject = new Object();
-		this.pictureLimit = pictureLimit;
 	}
 
 	@Override
@@ -137,7 +135,7 @@ public class CameraThread extends Thread {
 
 				int numberOfPictures = Camera.getNumberOfPictures();
 
-				if (numberOfPictures <= pictureLimit) {
+				if (numberOfPictures <= Camera.getPhotoLimit()) {
 
 					LOGGER.info("Photo created: " + fileName);
 

@@ -90,7 +90,7 @@ public class AdminPageHandler extends MainHandler {
 					int photoLimit = Integer
 							.parseInt(sb.toString().split("=")[1]);
 
-					CAMERA.setPhotoLimit(photoLimit);
+					Camera.setPhotoLimit(photoLimit);
 				}
 			} else if (url.equals("/admin/email")) {
 

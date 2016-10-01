@@ -117,12 +117,14 @@ public class BasicPageHandler extends MainHandler {
 				e.put("id", id);
 				e.put("name", "Photo limit");
 				e.put("type", "PROGRESSBAR");
-				e.put("value", CAMERA.getPhotoLimitPerc());
+				e.put("value", Camera.getPhotoLimitPerc());
 				securityCameraStatus.add(e);
-				data.put(id, CAMERA.getPhotoLimit());
+				data.put(id, Camera.getPhotoLimit());
 
 				data.put("securityCameraStatus", securityCameraStatus);
 				data.put("systemStatus", SIG.gatherInformations());
+
+				data.put("numberOfPictures", Camera.getNumberOfPictures());
 
 				sendObject(exchange, data);
 
