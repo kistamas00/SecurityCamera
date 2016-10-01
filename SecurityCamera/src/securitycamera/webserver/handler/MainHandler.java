@@ -67,6 +67,8 @@ public abstract class MainHandler implements HttpHandler {
 			contentType = "image/jpeg";
 		} else if (url.endsWith(".woff2")) {
 			contentType = "font/woff2";
+		} else if (url.endsWith(".map")) {
+			contentType = "application/json";
 		}
 
 		exchange.getResponseHeaders().add("Content-type", contentType);

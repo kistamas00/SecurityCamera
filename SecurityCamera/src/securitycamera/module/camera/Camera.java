@@ -14,6 +14,7 @@ public class Camera extends SecurityCameraModule {
 			.getLogger(Camera.class.getCanonicalName());
 
 	private CameraThread cameraThread;
+	private Integer pictureLimit;
 
 	public Camera() {
 
@@ -27,6 +28,8 @@ public class Camera extends SecurityCameraModule {
 					+ Core.NATIVE_LIBRARY_NAME + ".dll");
 			break;
 		}
+
+		this.pictureLimit = 20;
 	}
 
 	@Override
@@ -34,7 +37,7 @@ public class Camera extends SecurityCameraModule {
 
 		if (cameraThread == null) {
 
-			cameraThread = new CameraThread();
+			cameraThread = new CameraThread(pictureLimit);
 
 			LOGGER.info("Start " + this.getClass().getSimpleName());
 			cameraThread.start();
@@ -52,6 +55,23 @@ public class Camera extends SecurityCameraModule {
 		}
 	}
 
+	public static int getNumberOfPictures() {
+		return new File("public" + File.separator + "pictures")
+				.listFiles().length;
+	}
+
+	public int getPhotoLimitPerc() {
+
+		int numberOfPictures = getNumberOfPictures();
+
+		if (numberOfPictures == 0 && pictureLimit == 0) {
+			return 100;
+		} else {
+			return (int) Math
+					.round(((double) numberOfPictures / pictureLimit) * 100);
+		}
+	}
+
 	public void capturePhoto() {
 
 		if (cameraThread != null) {
@@ -66,11 +86,7 @@ public class Camera extends SecurityCameraModule {
 	}
 
 	public int getPhotoLimit() {
-		return cameraThread.getPhotoLimit();
-	}
-
-	public int getPhotoLimitPerc() {
-		return cameraThread.getPhotoLimitPerc();
+		return pictureLimit;
 	}
 
 	public boolean isRunning() {
@@ -87,14 +103,22 @@ public class Camera extends SecurityCameraModule {
 	}
 
 	public void setStreaming(boolean isStreaming) {
-		cameraThread.setStreaming(isStreaming);
+
+		if (cameraThread != null) {
+			cameraThread.setStreaming(isStreaming);
+		}
 	}
 
 	public void setMotionDetection(boolean motionDetection) {
-		cameraThread.setMotionDetection(motionDetection);
+		if (cameraThread != null) {
+			cameraThread.setMotionDetection(motionDetection);
+		}
 	}
 
 	public void setPhotoLimit(int photoLimit) {
-		cameraThread.setPhotoLimit(photoLimit);
+
+		if (photoLimit >= getNumberOfPictures()) {
+			pictureLimit = photoLimit;
+		}
 	}
 }

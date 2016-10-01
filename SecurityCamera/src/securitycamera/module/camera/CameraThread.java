@@ -37,22 +37,22 @@ public class CameraThread extends Thread {
 	private volatile boolean saveNext;
 	private volatile boolean motionDetection;
 	private volatile boolean motionDetected;
-	private volatile int picureLimit;
 
 	private long detectionTimeLimit;
 	private Object previousFrameLockObject;
+	private Integer pictureLimit;
 
-	public CameraThread() {
+	public CameraThread(Integer pictureLimit) {
 
-		isRunning = false;
-		isStreaming = false;
-		saveNext = false;
-		motionDetection = false;
-		motionDetected = false;
+		this.isRunning = false;
+		this.isStreaming = false;
+		this.saveNext = false;
+		this.motionDetection = false;
+		this.motionDetected = false;
 
-		picureLimit = 20;
-		detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
-		previousFrameLockObject = new Object();
+		this.detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
+		this.previousFrameLockObject = new Object();
+		this.pictureLimit = pictureLimit;
 	}
 
 	@Override
@@ -135,9 +135,9 @@ public class CameraThread extends Thread {
 					Email.sendEmail(new File(path));
 				}
 
-				int numberOfPictures = getNumberOfPictures();
+				int numberOfPictures = Camera.getNumberOfPictures();
 
-				if (numberOfPictures <= picureLimit) {
+				if (numberOfPictures <= pictureLimit) {
 
 					LOGGER.info("Photo created: " + fileName);
 
@@ -184,11 +184,6 @@ public class CameraThread extends Thread {
 		}
 	}
 
-	private int getNumberOfPictures() {
-		return new File("public" + File.separator + "pictures")
-				.listFiles().length;
-	}
-
 	public byte[] getLastFrameCopy() {
 
 		MatOfByte mob = new MatOfByte();
@@ -202,22 +197,6 @@ public class CameraThread extends Thread {
 		byte[] encodedMat = Base64.getEncoder().encode(mob.toArray());
 
 		return encodedMat;
-	}
-
-	public int getPhotoLimit() {
-		return picureLimit;
-	}
-
-	public int getPhotoLimitPerc() {
-
-		int numberOfPictures = getNumberOfPictures();
-
-		if (numberOfPictures == 0 && picureLimit == 0) {
-			return 100;
-		} else {
-			return (int) Math
-					.round(((double) numberOfPictures / picureLimit) * 100);
-		}
 	}
 
 	public void saveNextFrame() {
@@ -247,12 +226,5 @@ public class CameraThread extends Thread {
 		}
 
 		this.motionDetection = motionDetection;
-	}
-
-	public void setPhotoLimit(int photoLimit) {
-
-		if (photoLimit >= getNumberOfPictures()) {
-			picureLimit = photoLimit;
-		}
 	}
 }
