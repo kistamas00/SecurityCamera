@@ -2,12 +2,12 @@ package securitycamera;
 
 import java.util.logging.Logger;
 
-import securitycamera.module.SecurityCameraModule;
-import securitycamera.module.SecurityCameraModuleContainer;
-import securitycamera.module.camera.Camera;
-import securitycamera.module.camera.enums.OStype;
-import securitycamera.module.sig.SystemInformationGatherer;
-import securitycamera.webserver.Webserver;
+import securitycamera.modules.SecurityCameraModule;
+import securitycamera.modules.SecurityCameraModuleContainer;
+import securitycamera.modules.camera.Camera;
+import securitycamera.modules.camera.enums.OStype;
+import securitycamera.modules.sig.SystemInformationGatherer;
+import securitycamera.modules.webserver.Webserver;
 
 public class SecurityCamera {
 

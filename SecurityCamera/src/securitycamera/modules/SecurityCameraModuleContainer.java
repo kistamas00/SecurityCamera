@@ -1,4 +1,4 @@
-package securitycamera.module;
+package securitycamera.modules;
 
 import java.util.HashSet;
 import java.util.Set;

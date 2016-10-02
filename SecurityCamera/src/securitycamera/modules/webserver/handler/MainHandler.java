@@ -1,4 +1,4 @@
-package securitycamera.webserver.handler;
+package securitycamera.modules.webserver.handler;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,4 +1,4 @@
-package securitycamera.module;
+package securitycamera.modules;
 
 public abstract class SecurityCameraModule {
 

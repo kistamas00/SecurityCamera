@@ -1,4 +1,4 @@
-package securitycamera.webserver.auth;
+package securitycamera.modules.webserver.auth;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ public class UserAuthenticator extends BasicAuthenticator {
 		this.passwords = new HashMap<String, String>();
 		this.loggedIn = new HashSet<String>();
 
-		passwords.put("admin", "almafa");
+		passwords.put("admin", "scp2016");
 	}
 
 	@Override

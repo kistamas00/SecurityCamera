@@ -1,4 +1,4 @@
-package securitycamera.webserver.handler;
+package securitycamera.modules.webserver.handler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 import securitycamera.SecurityCamera;
 import securitycamera.email.Email;
-import securitycamera.module.camera.Camera;
-import securitycamera.webserver.Webserver;
+import securitycamera.modules.camera.Camera;
+import securitycamera.modules.webserver.Webserver;
 
 public class AdminPageHandler extends MainHandler {
 

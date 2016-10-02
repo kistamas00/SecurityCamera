@@ -1,4 +1,4 @@
-package securitycamera.webserver;
+package securitycamera.modules.webserver;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -6,10 +6,10 @@ import java.util.logging.Logger;
 
 import com.sun.net.httpserver.HttpServer;
 
-import securitycamera.module.SecurityCameraModule;
-import securitycamera.webserver.auth.UserAuthenticator;
-import securitycamera.webserver.handler.AdminPageHandler;
-import securitycamera.webserver.handler.BasicPageHandler;
+import securitycamera.modules.SecurityCameraModule;
+import securitycamera.modules.webserver.auth.UserAuthenticator;
+import securitycamera.modules.webserver.handler.AdminPageHandler;
+import securitycamera.modules.webserver.handler.BasicPageHandler;
 
 public class Webserver extends SecurityCameraModule {
 

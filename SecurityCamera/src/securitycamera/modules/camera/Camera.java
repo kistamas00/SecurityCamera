@@ -1,4 +1,4 @@
-package securitycamera.module.camera;
+package securitycamera.modules.camera;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.opencv.core.Core;
 
 import securitycamera.SecurityCamera;
-import securitycamera.module.SecurityCameraModule;
+import securitycamera.modules.SecurityCameraModule;
 
 public class Camera extends SecurityCameraModule {
 

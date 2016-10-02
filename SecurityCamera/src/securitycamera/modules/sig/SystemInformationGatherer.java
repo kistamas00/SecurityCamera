@@ -1,4 +1,4 @@
-package securitycamera.module.sig;
+package securitycamera.modules.sig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +13,8 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
 import securitycamera.SecurityCamera;
-import securitycamera.module.SecurityCameraModule;
-import securitycamera.webserver.Webserver;
+import securitycamera.modules.SecurityCameraModule;
+import securitycamera.modules.webserver.Webserver;
 
 public class SystemInformationGatherer extends SecurityCameraModule {
 

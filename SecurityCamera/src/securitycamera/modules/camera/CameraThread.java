@@ -1,4 +1,4 @@
-package securitycamera.module.camera;
+package securitycamera.modules.camera;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -18,7 +18,7 @@ import org.opencv.videoio.VideoCapture;
 
 import securitycamera.SecurityCamera;
 import securitycamera.email.Email;
-import securitycamera.module.camera.enums.OStype;
+import securitycamera.modules.camera.enums.OStype;
 
 public class CameraThread extends Thread {
 
