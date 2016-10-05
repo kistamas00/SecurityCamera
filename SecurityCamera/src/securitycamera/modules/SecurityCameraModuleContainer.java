@@ -3,6 +3,8 @@ package securitycamera.modules;
 import java.util.HashSet;
 import java.util.Set;
 
+import securitycamera.services.Settings;
+
 public class SecurityCameraModuleContainer {
 
 	private Set<SecurityCameraModule> modules;
@@ -17,7 +19,14 @@ public class SecurityCameraModuleContainer {
 	}
 
 	public void startAll() {
-		modules.forEach(m -> m.start());
+		modules.forEach(m -> {
+
+			String idString = m.getIdString();
+			if (idString == null
+					|| Settings.getSetting(idString, Boolean.class) == true) {
+				m.start();
+			}
+		});
 	}
 
 	@SuppressWarnings("unchecked")

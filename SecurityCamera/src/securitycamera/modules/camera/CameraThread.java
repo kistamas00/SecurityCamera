@@ -64,9 +64,17 @@ public class CameraThread extends Thread {
 			camera = new VideoCapture(0);
 
 			if (camera.isOpened()) {
-				isRunning = true;
+
 				LOGGER.info("Camera connected successfully");
+
+				setStreaming(
+						Settings.getSetting(Settings.STREAM, Boolean.class));
+				setMotionDetection(Settings
+						.getSetting(Settings.MOTION_DETECTION, Boolean.class));
+				isRunning = true;
+
 				super.start();
+
 			} else {
 				LOGGER.severe("Camera error!");
 			}
@@ -217,6 +225,8 @@ public class CameraThread extends Thread {
 	}
 
 	public void setStreaming(boolean isStreaming) {
+
+		Settings.setSetting(Settings.STREAM, isStreaming);
 		this.isStreaming = isStreaming;
 	}
 
@@ -226,6 +236,7 @@ public class CameraThread extends Thread {
 			detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
 		}
 
+		Settings.setSetting(Settings.MOTION_DETECTION, motionDetection);
 		this.motionDetection = motionDetection;
 	}
 }

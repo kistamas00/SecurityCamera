@@ -22,9 +22,9 @@ public class SecurityCamera {
 
 		Settings.load();
 
-		MODULES.addModule(new Camera());
-		MODULES.addModule(new Webserver());
 		MODULES.addModule(new SystemInformationGatherer());
+		MODULES.addModule(new Webserver());
+		MODULES.addModule(new Camera());
 
 		LOGGER.info("Start modules on " + OS_TYPE);
 

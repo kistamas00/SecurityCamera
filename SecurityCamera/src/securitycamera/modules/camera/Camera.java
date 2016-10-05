@@ -35,6 +35,7 @@ public class Camera extends SecurityCameraModule {
 
 		if (cameraThread == null) {
 
+			super.start();
 			cameraThread = new CameraThread();
 
 			LOGGER.info("Start " + this.getClass().getSimpleName());
@@ -47,10 +48,17 @@ public class Camera extends SecurityCameraModule {
 
 		if (cameraThread != null) {
 
+			super.stop();
+
 			LOGGER.info("Stop " + this.getClass().getSimpleName());
 			cameraThread.halt();
 			cameraThread = null;
 		}
+	}
+
+	@Override
+	public String getIdString() {
+		return Settings.CAMERA;
 	}
 
 	public static int getNumberOfPictures() {

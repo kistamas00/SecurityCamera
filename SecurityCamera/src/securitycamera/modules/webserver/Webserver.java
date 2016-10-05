@@ -10,6 +10,7 @@ import securitycamera.modules.SecurityCameraModule;
 import securitycamera.modules.webserver.auth.UserAuthenticator;
 import securitycamera.modules.webserver.handler.AdminPageHandler;
 import securitycamera.modules.webserver.handler.BasicPageHandler;
+import securitycamera.services.Settings;
 
 public class Webserver extends SecurityCameraModule {
 
@@ -40,6 +41,7 @@ public class Webserver extends SecurityCameraModule {
 
 		if (!isRunning) {
 
+			super.start();
 			isRunning = true;
 
 			LOGGER.info("Start " + this.getClass().getSimpleName());
@@ -52,10 +54,16 @@ public class Webserver extends SecurityCameraModule {
 
 		if (isRunning) {
 
+			super.stop();
 			isRunning = false;
 
 			LOGGER.info("Stop " + this.getClass().getSimpleName());
 			server.stop(0);
 		}
+	}
+
+	@Override
+	public String getIdString() {
+		return Settings.WEBSERVER;
 	}
 }

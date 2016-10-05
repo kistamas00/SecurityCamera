@@ -27,19 +27,30 @@ public class SystemInformationGatherer extends SecurityCameraModule {
 
 		if (sigar == null) {
 
-			LOGGER.info("Start " + this.getClass().getSimpleName());
+			super.start();
 
 			sigar = new Sigar();
+
+			LOGGER.info("Start " + this.getClass().getSimpleName());
 		}
 	}
 
 	@Override
 	public void stop() {
 
-		LOGGER.info("Stop " + this.getClass().getSimpleName());
+		if (sigar != null) {
 
-		sigar.close();
-		sigar = null;
+			super.stop();
+
+			LOGGER.info("Stop " + this.getClass().getSimpleName());
+			sigar.close();
+			sigar = null;
+		}
+	}
+
+	@Override
+	public String getIdString() {
+		return null;
 	}
 
 	public List<Map<String, Object>> gatherInformations() {
