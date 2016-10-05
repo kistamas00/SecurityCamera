@@ -76,7 +76,7 @@ public class Settings {
 		return (T) value;
 	}
 
-	public static void setSetting(String key, Object value) {
+	public synchronized static void setSetting(final String key, Object value) {
 
 		Object prevValue = settings.put(key, value);
 

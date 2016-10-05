@@ -34,9 +34,7 @@ public class CameraThread extends Thread {
 	private volatile long previousDetection;
 
 	private volatile boolean isRunning;
-	private volatile boolean isStreaming;
 	private volatile boolean saveNext;
-	private volatile boolean motionDetection;
 	private volatile boolean motionDetected;
 
 	private long detectionTimeLimit;
@@ -45,9 +43,7 @@ public class CameraThread extends Thread {
 	public CameraThread() {
 
 		this.isRunning = false;
-		this.isStreaming = false;
 		this.saveNext = false;
-		this.motionDetection = false;
 		this.motionDetected = false;
 
 		this.detectionTimeLimit = DETECTION_TIME_LIMIT_DEFAULT;
@@ -107,8 +103,8 @@ public class CameraThread extends Thread {
 				frameT.release();
 			}
 
-			if (motionDetection && previousFrame != null
-					&& System.currentTimeMillis()
+			if (Settings.getSetting(Settings.MOTION_DETECTION, Boolean.class)
+					&& previousFrame != null && System.currentTimeMillis()
 							- previousDetection >= detectionTimeLimit) {
 
 				double errorL2 = Core.norm(previousFrame, frame, Core.NORM_L2);
@@ -216,18 +212,9 @@ public class CameraThread extends Thread {
 		return isRunning;
 	}
 
-	public boolean isStreaming() {
-		return isStreaming;
-	}
-
-	public boolean isMotionDetectionEnabled() {
-		return motionDetection;
-	}
-
 	public void setStreaming(boolean isStreaming) {
 
 		Settings.setSetting(Settings.STREAM, isStreaming);
-		this.isStreaming = isStreaming;
 	}
 
 	public void setMotionDetection(boolean motionDetection) {
@@ -237,6 +224,5 @@ public class CameraThread extends Thread {
 		}
 
 		Settings.setSetting(Settings.MOTION_DETECTION, motionDetection);
-		this.motionDetection = motionDetection;
 	}
 }

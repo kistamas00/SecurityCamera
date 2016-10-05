@@ -89,8 +89,9 @@ public class Camera extends SecurityCameraModule {
 	}
 
 	public byte[] getLastFrameCopy() {
-		return cameraThread == null || !cameraThread.isStreaming() ? null
-				: cameraThread.getLastFrameCopy();
+		return cameraThread == null
+				|| !Settings.getSetting(Settings.STREAM, Boolean.class) ? null
+						: cameraThread.getLastFrameCopy();
 	}
 
 	public boolean isRunning() {
@@ -98,12 +99,13 @@ public class Camera extends SecurityCameraModule {
 	}
 
 	public boolean isStreaming() {
-		return cameraThread == null ? false : cameraThread.isStreaming();
+		return cameraThread == null ? false
+				: Settings.getSetting(Settings.STREAM, Boolean.class);
 	}
 
 	public boolean isMotionDetectionEnabled() {
 		return cameraThread == null ? false
-				: cameraThread.isMotionDetectionEnabled();
+				: Settings.getSetting(Settings.MOTION_DETECTION, Boolean.class);
 	}
 
 	public static void setPhotoLimit(int photoLimit) {

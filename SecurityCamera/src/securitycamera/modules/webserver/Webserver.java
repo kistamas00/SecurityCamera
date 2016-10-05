@@ -29,7 +29,8 @@ public class Webserver extends SecurityCameraModule {
 			LOGGER.severe(e.getMessage());
 		}
 
-		server.createContext("/", new BasicPageHandler());
+		server.createContext("/", new BasicPageHandler())
+				.setAuthenticator(new UserAuthenticator());
 		server.createContext("/admin", new AdminPageHandler())
 				.setAuthenticator(new UserAuthenticator());
 
