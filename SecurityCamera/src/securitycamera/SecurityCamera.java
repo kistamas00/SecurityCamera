@@ -8,6 +8,7 @@ import securitycamera.modules.camera.Camera;
 import securitycamera.modules.camera.enums.OStype;
 import securitycamera.modules.sig.SystemInformationGatherer;
 import securitycamera.modules.webserver.Webserver;
+import securitycamera.services.Settings;
 
 public class SecurityCamera {
 
@@ -18,6 +19,8 @@ public class SecurityCamera {
 	private final static SecurityCameraModuleContainer MODULES = new SecurityCameraModuleContainer();
 
 	public static void main(String args[]) {
+
+		Settings.load();
 
 		MODULES.addModule(new Camera());
 		MODULES.addModule(new Webserver());

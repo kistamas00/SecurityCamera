@@ -1,46 +1,62 @@
 package securitycamera.modules.webserver.auth;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 
+import securitycamera.services.Settings;
+
 public class UserAuthenticator extends BasicAuthenticator {
 
-	private static Logger LOGGER = Logger
+	private static final Logger LOGGER = Logger
 			.getLogger(UserAuthenticator.class.getCanonicalName());
 
-	private Map<String, String> passwords;
-	private Set<String> loggedIn;
+	private boolean loggedIn;
 
 	public UserAuthenticator() {
 
 		super(UserAuthenticator.class.getCanonicalName());
-		this.passwords = new HashMap<String, String>();
-		this.loggedIn = new HashSet<String>();
-
-		passwords.put("admin", "scp2016");
+		loggedIn = false;
 	}
 
 	@Override
 	public boolean checkCredentials(String username, String password) {
 
-		if (password.equals(passwords.get(username))) {
+		try {
 
-			if (!loggedIn.contains(username)) {
-				LOGGER.info("Credentials accepted for " + username);
-				loggedIn.add(username);
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] mdbytes = md.digest();
+
+			// convert the byte to hex format
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < mdbytes.length; i++) {
+				sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16)
+						.substring(1));
 			}
-			return true;
 
-		} else {
+			if (username.equals("admin") && sb.toString().equals(
+					Settings.getSetting(Settings.USER_PASS, String.class))) {
 
-			LOGGER.info(
-					"Credentials rejected for " + username + " - " + password);
+				if (!loggedIn) {
+					loggedIn = true;
+					LOGGER.info("Credentials accepted for admin");
+				}
+				return true;
+
+			} else {
+
+				LOGGER.info("Credentials rejected for " + username + " - "
+						+ password);
+				return false;
+			}
+
+		} catch (NoSuchAlgorithmException e) {
+			LOGGER.severe(e.getMessage());
 			return false;
 		}
+
 	}
 }

@@ -7,13 +7,12 @@ import org.opencv.core.Core;
 
 import securitycamera.SecurityCamera;
 import securitycamera.modules.SecurityCameraModule;
+import securitycamera.services.Settings;
 
 public class Camera extends SecurityCameraModule {
 
 	private final static Logger LOGGER = Logger
 			.getLogger(Camera.class.getCanonicalName());
-
-	private static int pictureLimit = 20;
 
 	private CameraThread cameraThread;
 
@@ -59,13 +58,11 @@ public class Camera extends SecurityCameraModule {
 				.listFiles().length;
 	}
 
-	public static int getPhotoLimit() {
-		return pictureLimit;
-	}
-
 	public static int getPhotoLimitPerc() {
 
 		int numberOfPictures = getNumberOfPictures();
+		int pictureLimit = Settings.getSetting(Settings.PHOTO_LIMIT,
+				Integer.class);
 
 		if (numberOfPictures == 0 && pictureLimit == 0) {
 			return 100;
@@ -104,7 +101,7 @@ public class Camera extends SecurityCameraModule {
 	public static void setPhotoLimit(int photoLimit) {
 
 		if (photoLimit >= getNumberOfPictures()) {
-			pictureLimit = photoLimit;
+			Settings.setSetting(Settings.PHOTO_LIMIT, photoLimit);
 		}
 	}
 

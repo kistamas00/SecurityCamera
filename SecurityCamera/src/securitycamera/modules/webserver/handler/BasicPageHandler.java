@@ -13,9 +13,9 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 
 import securitycamera.SecurityCamera;
-import securitycamera.email.Email;
 import securitycamera.modules.camera.Camera;
 import securitycamera.modules.sig.SystemInformationGatherer;
+import securitycamera.services.Settings;
 
 public class BasicPageHandler extends MainHandler {
 
@@ -108,9 +108,10 @@ public class BasicPageHandler extends MainHandler {
 				id = "email";
 				e.put("id", id);
 				e.put("name", "E-mail");
-				e.put("value", Email.getEmailAddress());
+				e.put("value",
+						Settings.getSetting(Settings.EMAIL, String.class));
 				securityCameraStatus.add(e);
-				data.put(id, Email.getEmailAddress());
+				data.put(id, Settings.getSetting(Settings.EMAIL, String.class));
 
 				e = new HashMap<String, Object>();
 				id = "photoLimit";
@@ -119,7 +120,8 @@ public class BasicPageHandler extends MainHandler {
 				e.put("type", "PROGRESSBAR");
 				e.put("value", Camera.getPhotoLimitPerc());
 				securityCameraStatus.add(e);
-				data.put(id, Camera.getPhotoLimit());
+				data.put(id, Settings.getSetting(Settings.PHOTO_LIMIT,
+						Integer.class));
 
 				data.put("securityCameraStatus", securityCameraStatus);
 				data.put("systemStatus", SIG.gatherInformations());

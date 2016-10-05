@@ -8,9 +8,9 @@ import java.nio.file.Paths;
 import com.sun.net.httpserver.HttpExchange;
 
 import securitycamera.SecurityCamera;
-import securitycamera.email.Email;
 import securitycamera.modules.camera.Camera;
 import securitycamera.modules.webserver.Webserver;
+import securitycamera.services.Settings;
 
 public class AdminPageHandler extends MainHandler {
 
@@ -111,7 +111,7 @@ public class AdminPageHandler extends MainHandler {
 					String email = sb.toString().split("=")[1].replaceAll("%40",
 							"@");
 
-					Email.setEmailAddress(email);
+					Settings.setSetting(Settings.EMAIL, email);
 				}
 			}
 

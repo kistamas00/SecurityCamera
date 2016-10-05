@@ -17,8 +17,9 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
 import securitycamera.SecurityCamera;
-import securitycamera.email.Email;
 import securitycamera.modules.camera.enums.OStype;
+import securitycamera.services.Email;
+import securitycamera.services.Settings;
 
 public class CameraThread extends Thread {
 
@@ -134,8 +135,10 @@ public class CameraThread extends Thread {
 				}
 
 				int numberOfPictures = Camera.getNumberOfPictures();
+				int photoLimit = Settings.getSetting(Settings.PHOTO_LIMIT,
+						Integer.class);
 
-				if (numberOfPictures <= Camera.getPhotoLimit()) {
+				if (numberOfPictures <= photoLimit) {
 
 					LOGGER.info("Photo created: " + fileName);
 

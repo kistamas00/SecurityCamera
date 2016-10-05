@@ -1,4 +1,4 @@
-package securitycamera.email;
+package securitycamera.services;
 
 import java.io.File;
 import java.util.Properties;
@@ -28,9 +28,9 @@ public class Email {
 	private final static String USERNAME = "scameraemail@gmail.com";
 	private final static String PASSWORD = "securitycamerapass";
 
-	private static String emailAddress = "scameraemail@gmail.com";
-
 	public static void sendEmail(File attachment) {
+
+		String emailAddress = Settings.getSetting(Settings.EMAIL, String.class);
 
 		if (!emailAddress.equals(USERNAME)) {
 
@@ -83,13 +83,4 @@ public class Email {
 			LOGGER.warning("E-mail address didn't set up yet!");
 		}
 	}
-
-	public static String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public static void setEmailAddress(String emailAddress) {
-		Email.emailAddress = emailAddress;
-	}
-
 }
