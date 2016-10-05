@@ -27,7 +27,7 @@
 					<li><a href="/pictures">Pictures</a></li> 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+					<li class="active"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				</ul>
 			</div>
 		</div>
@@ -89,7 +89,8 @@
 							<tr>
 								<td colspan="2">
 									<form action="/admin/camera/capture/photo" method="post">
-										<input class="btn btn-primary btn-block" type="submit" value="Capture photo">
+										<label for="capture-photo-btn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-camera"></span> Capture photo</label>
+										<input id="capture-photo-btn" class="hidden" type="submit">
 									</form>
 								</td>
 							</tr>
