@@ -2,6 +2,7 @@ package securitycamera.services;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -56,6 +57,20 @@ public class Settings {
 			br.close();
 
 			LOGGER.info("Settings loaded");
+
+		} catch (FileNotFoundException e) {
+
+			try {
+
+				PrintWriter pw = new PrintWriter(new FileWriter(SETTINGS_FILE));
+				pw.println("{}");
+				pw.close();
+
+				LOGGER.info("conf.ini created");
+
+			} catch (IOException e1) {
+				LOGGER.severe(e1.getMessage());
+			}
 
 		} catch (IOException e) {
 			LOGGER.severe(e.getMessage());
