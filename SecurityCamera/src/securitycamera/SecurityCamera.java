@@ -1,5 +1,9 @@
 package securitycamera;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import securitycamera.modules.SecurityCameraModule;
@@ -21,6 +25,29 @@ public class SecurityCamera {
 	public static void main(String args[]) {
 
 		Settings.load();
+
+		try {
+
+			if (args.length == 1) {
+
+				Path path = Paths.get(args[0]);
+
+				if (Files.exists(path)) {
+
+					String newPath = path.toRealPath().toString();
+					Settings.setSetting(Settings.PICTURES_PATH, newPath);
+
+					LOGGER.info("Pictures folder changed to: " + newPath);
+				}
+
+			} else if (args.length > 1) {
+
+				LOGGER.warning("Parameter error");
+			}
+
+		} catch (IOException e) {
+			LOGGER.severe(e.getMessage());
+		}
 
 		MODULES.addModule(new SystemInformationGatherer());
 		MODULES.addModule(new Webserver());

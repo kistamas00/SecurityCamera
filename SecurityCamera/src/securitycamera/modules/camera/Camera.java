@@ -62,8 +62,9 @@ public class Camera extends SecurityCameraModule {
 	}
 
 	public static int getNumberOfPictures() {
-		return new File("public" + File.separator + "pictures")
-				.listFiles().length;
+		return new File(
+				Settings.getSetting(Settings.PICTURES_PATH, String.class))
+						.listFiles().length;
 	}
 
 	public static int getPhotoLimitPerc() {

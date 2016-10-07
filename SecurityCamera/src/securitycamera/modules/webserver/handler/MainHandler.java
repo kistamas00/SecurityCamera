@@ -118,7 +118,7 @@ public abstract class MainHandler implements HttpHandler {
 
 		OutputStream responseBody = exchange.getResponseBody();
 
-		exchange.getResponseHeaders().add("content-type", "application/json");
+		exchange.getResponseHeaders().add("Content-type", "application/json");
 		exchange.sendResponseHeaders(200, data.length());
 		responseBody.write(data.getBytes());
 		responseBody.flush();

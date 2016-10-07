@@ -23,6 +23,7 @@ public class Settings {
 	private static Map<String, Object> settings = new HashMap<String, Object>();
 
 	public static final String USER_PASS = "userPass";
+	public static final String PICTURES_PATH = "picturesPath";
 	public static final String WEBSERVER = "webserver";
 	public static final String CAMERA = "camera";
 	public static final String STREAM = "stream";
@@ -33,6 +34,7 @@ public class Settings {
 	private static void init() {
 
 		settings.put(USER_PASS, "21232f297a57a5a743894a0e4a801fc3");
+		settings.put(PICTURES_PATH, "public" + File.separator + "pictures");
 		settings.put(WEBSERVER, true);
 		settings.put(CAMERA, false);
 		settings.put(STREAM, false);

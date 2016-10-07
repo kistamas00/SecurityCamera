@@ -3,6 +3,7 @@ package securitycamera.modules.webserver.handler;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +49,8 @@ public class BasicPageHandler extends MainHandler {
 
 			} else if (url.equals("/pictures/all")) {
 
-				File folder = new File("public" + File.separator + "pictures");
+				File folder = new File(Settings
+						.getSetting(Settings.PICTURES_PATH, String.class));
 				File[] listOfFiles = folder.listFiles();
 				List<String> fileNames = new ArrayList<String>();
 
@@ -72,56 +74,63 @@ public class BasicPageHandler extends MainHandler {
 				List<Map<String, Object>> securityCameraStatus = new ArrayList<Map<String, Object>>();
 
 				Map<String, Object> e = new HashMap<String, Object>();
-				String id = "webserver";
-				e.put("id", id);
+				e.put("id", Settings.WEBSERVER);
 				e.put("name", "Webserver");
 				e.put("value", "RUNNING");
 				securityCameraStatus.add(e);
-				data.put(id, true);
+				data.put(Settings.WEBSERVER, true);
 
 				e = new HashMap<String, Object>();
-				id = "camera";
-				e.put("id", id);
+				e.put("id", Settings.CAMERA);
 				e.put("name", "Camera");
 				e.put("value", CAMERA.isRunning() ? "RUNNING" : "STOPPED");
 				securityCameraStatus.add(e);
-				data.put(id, CAMERA.isRunning());
+				data.put(Settings.CAMERA, CAMERA.isRunning());
 
 				e = new HashMap<String, Object>();
-				id = "stream";
-				e.put("id", id);
+				e.put("id", Settings.STREAM);
 				e.put("name", "Streaming");
 				e.put("value", CAMERA.isStreaming() ? "ON" : "OFF");
 				securityCameraStatus.add(e);
-				data.put(id, CAMERA.isStreaming());
+				data.put(Settings.STREAM, CAMERA.isStreaming());
 
 				e = new HashMap<String, Object>();
-				id = "motionDetection";
-				e.put("id", id);
+				e.put("id", Settings.MOTION_DETECTION);
 				e.put("name", "Motion detection");
 				e.put("value", CAMERA.isMotionDetectionEnabled() ? "ENABLED"
 						: "DISABLED");
 				securityCameraStatus.add(e);
-				data.put(id, CAMERA.isMotionDetectionEnabled());
+				data.put(Settings.MOTION_DETECTION,
+						CAMERA.isMotionDetectionEnabled());
 
 				e = new HashMap<String, Object>();
-				id = "email";
-				e.put("id", id);
+				e.put("id", Settings.EMAIL);
 				e.put("name", "E-mail");
 				e.put("value",
 						Settings.getSetting(Settings.EMAIL, String.class));
 				securityCameraStatus.add(e);
-				data.put(id, Settings.getSetting(Settings.EMAIL, String.class));
+				data.put(Settings.EMAIL,
+						Settings.getSetting(Settings.EMAIL, String.class));
 
 				e = new HashMap<String, Object>();
-				id = "photoLimit";
-				e.put("id", id);
+				e.put("id", Settings.PICTURES_PATH);
+				e.put("name", "Pictures location");
+				e.put("value",
+						Paths.get(Settings.getSetting(Settings.PICTURES_PATH,
+								String.class)).toRealPath().toString());
+				securityCameraStatus.add(e);
+				data.put(Settings.PICTURES_PATH,
+						Paths.get(Settings.getSetting(Settings.PICTURES_PATH,
+								String.class)).toRealPath().toString());
+
+				e = new HashMap<String, Object>();
+				e.put("id", Settings.PHOTO_LIMIT);
 				e.put("name", "Photo limit");
 				e.put("type", "PROGRESSBAR");
 				e.put("value", Camera.getPhotoLimitPerc());
 				securityCameraStatus.add(e);
-				data.put(id, Settings.getSetting(Settings.PHOTO_LIMIT,
-						Integer.class));
+				data.put(Settings.PHOTO_LIMIT, Settings
+						.getSetting(Settings.PHOTO_LIMIT, Integer.class));
 
 				data.put("securityCameraStatus", securityCameraStatus);
 				data.put("systemStatus", SIG.gatherInformations());
@@ -129,6 +138,24 @@ public class BasicPageHandler extends MainHandler {
 				data.put("numberOfPictures", Camera.getNumberOfPictures());
 
 				sendObject(exchange, data);
+
+			} else if (url.startsWith("/public/pictures/")) {
+
+				String fileName = url.substring("/public/pictures/".length());
+				Path path = Paths
+						.get((Settings.getSetting(Settings.PICTURES_PATH,
+								String.class) + File.separator + fileName)
+										.replace("/", File.separator)
+										.replace("\\", File.separator));
+
+				if (Files.exists(path)) {
+
+					sendStaticFile(exchange, path);
+
+				} else {
+
+					sendNotFoundPage(exchange);
+				}
 
 			} else if (url.startsWith("/public/") && !url.endsWith("/")) {
 
