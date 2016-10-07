@@ -90,6 +90,19 @@
 								</td>
 							</tr>
 							<tr>
+								<td>Password:</td>
+								<td>
+									<form action="/admin/password" method="post">
+										<div class="input-group input-group-sm">
+											<input id="password-input" type="password" class="form-control" name="password">
+											<span class="input-group-btn">
+												<button type="submit" class="btn btn-primary">Set password</button>
+											</span>
+										</div>
+									</form>
+								</td>
+							</tr>
+							<tr>
 								<td colspan="2">
 									<form action="/admin/camera/capture/photo" method="post">
 										<label for="capture-photo-btn" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-camera"></span> Capture photo</label>

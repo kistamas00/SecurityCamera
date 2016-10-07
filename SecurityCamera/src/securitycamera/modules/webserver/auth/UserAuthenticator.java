@@ -1,11 +1,10 @@
 package securitycamera.modules.webserver.auth;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 
+import securitycamera.services.MD5;
 import securitycamera.services.Settings;
 
 public class UserAuthenticator extends BasicAuthenticator {
@@ -24,39 +23,22 @@ public class UserAuthenticator extends BasicAuthenticator {
 	@Override
 	public boolean checkCredentials(String username, String password) {
 
-		try {
+		String MD5Password = MD5.stringToMD5(password);
 
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			byte[] mdbytes = md.digest();
+		if (username.equals("admin") && MD5Password.equals(
+				Settings.getSetting(Settings.USER_PASS, String.class))) {
 
-			// convert the byte to hex format
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < mdbytes.length; i++) {
-				sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16)
-						.substring(1));
+			if (!loggedIn) {
+				loggedIn = true;
+				LOGGER.info("Credentials accepted for admin");
 			}
+			return true;
 
-			if (username.equals("admin") && sb.toString().equals(
-					Settings.getSetting(Settings.USER_PASS, String.class))) {
+		} else {
 
-				if (!loggedIn) {
-					loggedIn = true;
-					LOGGER.info("Credentials accepted for admin");
-				}
-				return true;
-
-			} else {
-
-				LOGGER.info("Credentials rejected for " + username + " - "
-						+ password);
-				return false;
-			}
-
-		} catch (NoSuchAlgorithmException e) {
-			LOGGER.severe(e.getMessage());
+			LOGGER.info(
+					"Credentials rejected for " + username + " - " + password);
 			return false;
 		}
-
 	}
 }

@@ -10,6 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 import securitycamera.SecurityCamera;
 import securitycamera.modules.camera.Camera;
 import securitycamera.modules.webserver.Webserver;
+import securitycamera.services.MD5;
 import securitycamera.services.Settings;
 
 public class AdminPageHandler extends MainHandler {
@@ -92,6 +93,7 @@ public class AdminPageHandler extends MainHandler {
 
 					Camera.setPhotoLimit(photoLimit);
 				}
+
 			} else if (url.equals("/admin/email")) {
 
 				BufferedReader br = new BufferedReader(
@@ -112,6 +114,28 @@ public class AdminPageHandler extends MainHandler {
 							"@");
 
 					Settings.setSetting(Settings.EMAIL, email);
+				}
+
+			} else if (url.equals("/admin/password")) {
+
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(exchange.getRequestBody()));
+				StringBuffer sb = new StringBuffer();
+				String line = null;
+
+				while ((line = br.readLine()) != null) {
+					sb.append(line);
+				}
+
+				br.close();
+
+				if (sb.toString().startsWith("password=")
+						&& sb.toString().length() > "password=".length()) {
+
+					String password = sb.toString().split("=")[1];
+
+					Settings.setSetting(Settings.USER_PASS,
+							MD5.stringToMD5(password));
 				}
 			}
 

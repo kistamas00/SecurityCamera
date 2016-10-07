@@ -100,6 +100,9 @@ function updateContent() {
 			if ($('#photolimit-input').val() === '') {
 				$('#photolimit-input').val(json.photoLimit);
 			}
+			if ($('#password-input').val() === '') {
+				$('#password-input').val('admin');
+			}
 
 			if ($('#photolimit-input').attr('min') != json.numberOfPictures) {
 				$('#photolimit-input').attr('min', json.numberOfPictures);
