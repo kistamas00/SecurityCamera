@@ -25,6 +25,9 @@
 					<li class="active"><a href="/pictures">Pictures</a></li> 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" onclick="$.ajax({url:window.location.href.replace(/:\/\//,'://log:out@'),error:function(){location.reload();}});"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 				</ul>
 			</div>
