@@ -129,8 +129,8 @@ public class CameraThread extends Thread {
 				DateFormat dateFormat = new SimpleDateFormat(
 						"yyyy-MM-dd-HH-mm-ss");
 				String fileName = dateFormat.format(new Date()) + ".jpg";
-				String path = "public" + File.separator + "pictures"
-						+ File.separator + fileName;
+				String path = Settings.getSetting(Settings.PICTURES_PATH,
+						String.class) + File.separator + fileName;
 
 				Imgcodecs.imwrite(path, frame);
 
@@ -148,8 +148,9 @@ public class CameraThread extends Thread {
 
 				} else {
 
-					File[] fileList = new File(
-							"public" + File.separator + "pictures").listFiles();
+					File[] fileList = new File(Settings
+							.getSetting(Settings.PICTURES_PATH, String.class))
+									.listFiles();
 					List<String> fileNames = new ArrayList<String>();
 
 					for (File f : fileList) {
@@ -158,8 +159,9 @@ public class CameraThread extends Thread {
 
 					Collections.sort(fileNames);
 
-					File picture = new File("public" + File.separator
-							+ "pictures" + File.separator + fileNames.get(0));
+					File picture = new File(Settings
+							.getSetting(Settings.PICTURES_PATH, String.class)
+							+ File.separator + fileNames.get(0));
 					picture.delete();
 
 					LOGGER.warning("Photo limit reached! Photo ("

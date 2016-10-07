@@ -38,6 +38,10 @@ public class SecurityCamera {
 					Settings.setSetting(Settings.PICTURES_PATH, newPath);
 
 					LOGGER.info("Pictures folder changed to: " + newPath);
+
+				} else {
+
+					LOGGER.warning("Path does not exists");
 				}
 
 			} else if (args.length > 1) {
