@@ -2,5 +2,6 @@
 .recommenders
 .classpath
 .project
+SecurityCamera/conf.ini
 SecurityCamera/bin
 SecurityCamera/public/pictures
