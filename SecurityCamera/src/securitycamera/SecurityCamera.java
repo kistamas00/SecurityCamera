@@ -60,6 +60,8 @@ public class SecurityCamera {
 		LOGGER.info("Start modules on " + OS_TYPE);
 
 		MODULES.startAll();
+
+		LOGGER.info("Modules started!");
 	}
 
 	public static <T extends SecurityCameraModule> T getModule(Class<T> c) {

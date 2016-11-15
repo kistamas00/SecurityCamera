@@ -22,6 +22,10 @@ public class SystemInformationGatherer extends SecurityCameraModule {
 			.getLogger(Webserver.class.getCanonicalName());
 	private Sigar sigar;
 
+	public SystemInformationGatherer() {
+		System.setProperty("java.library.path", System.getProperty("user.dir"));
+	}
+
 	@Override
 	public void start() {
 
