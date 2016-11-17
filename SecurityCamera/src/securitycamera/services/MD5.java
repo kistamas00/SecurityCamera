@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 public class MD5 {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(Email.class.getCanonicalName());
+			.getLogger(MD5.class.getCanonicalName());
 
 	public static String stringToMD5(String s) {
 

@@ -18,7 +18,7 @@ public class Settings {
 	private static final String SETTINGS_FILE = System.getProperty("user.dir")
 			+ File.separator + "conf.ini";
 	private final static Logger LOGGER = Logger
-			.getLogger(Email.class.getCanonicalName());
+			.getLogger(Settings.class.getCanonicalName());
 
 	private static Map<String, Object> settings = new HashMap<String, Object>();
 

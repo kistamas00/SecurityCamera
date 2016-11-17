@@ -14,12 +14,11 @@ import org.hyperic.sigar.SigarException;
 
 import securitycamera.SecurityCamera;
 import securitycamera.modules.SecurityCameraModule;
-import securitycamera.modules.webserver.Webserver;
 
 public class SystemInformationGatherer extends SecurityCameraModule {
 
 	private final static Logger LOGGER = Logger
-			.getLogger(Webserver.class.getCanonicalName());
+			.getLogger(SystemInformationGatherer.class.getCanonicalName());
 	private Sigar sigar;
 
 	public SystemInformationGatherer() {
