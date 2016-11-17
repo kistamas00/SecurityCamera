@@ -17,7 +17,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
 import securitycamera.SecurityCamera;
-import securitycamera.modules.camera.enums.OStype;
+import securitycamera.enums.OStype;
 import securitycamera.services.Email;
 import securitycamera.services.Settings;
 

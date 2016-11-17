@@ -6,10 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
 
+import securitycamera.enums.OStype;
 import securitycamera.modules.SecurityCameraModule;
 import securitycamera.modules.SecurityCameraModuleContainer;
 import securitycamera.modules.camera.Camera;
-import securitycamera.modules.camera.enums.OStype;
 import securitycamera.modules.sig.SystemInformationGatherer;
 import securitycamera.modules.webserver.Webserver;
 import securitycamera.services.Settings;
