@@ -10,7 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 import securitycamera.SecurityCamera;
 import securitycamera.modules.camera.Camera;
 import securitycamera.modules.webserver.Webserver;
-import securitycamera.services.MD5;
+import securitycamera.services.SHA256;
 import securitycamera.services.Settings;
 
 public class AdminPageHandler extends MainHandler {
@@ -135,7 +135,7 @@ public class AdminPageHandler extends MainHandler {
 					String password = sb.toString().split("=")[1];
 
 					Settings.setSetting(Settings.USER_PASS,
-							MD5.stringToMD5(password));
+							SHA256.stringToSHA256(password));
 				}
 			}
 

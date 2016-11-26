@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 
-import securitycamera.services.MD5;
+import securitycamera.services.SHA256;
 import securitycamera.services.Settings;
 
 public class UserAuthenticator extends BasicAuthenticator {
@@ -23,7 +23,7 @@ public class UserAuthenticator extends BasicAuthenticator {
 	@Override
 	public boolean checkCredentials(String username, String password) {
 
-		String MD5Password = MD5.stringToMD5(password);
+		String MD5Password = SHA256.stringToSHA256(password);
 
 		if (username.equals("admin") && MD5Password.equals(
 				Settings.getSetting(Settings.USER_PASS, String.class))) {
