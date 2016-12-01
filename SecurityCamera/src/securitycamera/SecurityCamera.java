@@ -1,9 +1,11 @@
 package securitycamera;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -26,7 +28,7 @@ public class SecurityCamera {
 	public static void main(String args[]) {
 
 		Path picturePath = null;
-		Path loggerPath = null;
+		String loggerFileName = null;
 
 		for (int i = 0; i < args.length; i++) {
 
@@ -35,41 +37,36 @@ public class SecurityCamera {
 			case "--picture-path":
 			case "-p":
 
-				picturePath = Paths.get(args[++i]);
+				String pathtring = args[i + 1].startsWith(File.separator)
+						? System.getProperty("user.dir") + args[++i]
+						: args[++i];
+				picturePath = Paths.get(pathtring);
 				break;
 
-			case "--logger-path":
+			case "--log-file-name":
 			case "-l":
 
-				loggerPath = Paths.get(args[++i]);
+				loggerFileName = args[++i];
 				break;
 
 			default:
 
-				LOGGER.severe("Parameter error!: " + args.toString());
+				LOGGER.severe("Parameter error!: " + Arrays.toString(args));
+				i = args.length;
 				break;
 			}
 		}
 
-		if (loggerPath != null) {
+		if (loggerFileName != null) {
 
 			try {
 
-				if (Files.exists(loggerPath)) {
+				FileHandler fileHandler = new FileHandler(loggerFileName);
+				fileHandler.setFormatter(new SimpleFormatter());
 
-					FileHandler fileHandler = new FileHandler(
-							loggerPath.toRealPath().toString());
-					fileHandler.setFormatter(new SimpleFormatter());
+				LOGGER.addHandler(fileHandler);
 
-					LOGGER.addHandler(fileHandler);
-
-					LOGGER.info("Log save in: "
-							+ loggerPath.toRealPath().toString());
-
-				} else {
-
-					LOGGER.warning("Path does not exists");
-				}
+				LOGGER.info("Log save in: " + loggerFileName);
 
 			} catch (IOException e) {
 				LOGGER.severe(e.getMessage());
@@ -91,7 +88,8 @@ public class SecurityCamera {
 
 				} else {
 
-					LOGGER.warning("Path does not exists");
+					LOGGER.warning(
+							"Path does not exists: " + picturePath.toString());
 				}
 
 			} catch (IOException e) {

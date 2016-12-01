@@ -4,13 +4,13 @@ import java.util.logging.Logger;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 
+import securitycamera.SecurityCamera;
 import securitycamera.services.SHA256;
 import securitycamera.services.Settings;
 
 public class UserAuthenticator extends BasicAuthenticator {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(UserAuthenticator.class.getCanonicalName());
+	private static final Logger LOGGER = SecurityCamera.LOGGER;
 
 	private boolean loggedIn;
 

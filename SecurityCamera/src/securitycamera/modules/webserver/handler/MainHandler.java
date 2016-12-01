@@ -12,10 +12,11 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import securitycamera.SecurityCamera;
+
 public abstract class MainHandler implements HttpHandler {
 
-	private static Logger LOGGER = Logger
-			.getLogger(MainHandler.class.getCanonicalName());
+	private static Logger LOGGER = SecurityCamera.LOGGER;
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
