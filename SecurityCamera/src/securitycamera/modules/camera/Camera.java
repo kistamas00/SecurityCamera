@@ -11,8 +11,7 @@ import securitycamera.services.Settings;
 
 public class Camera extends SecurityCameraModule {
 
-	private final static Logger LOGGER = Logger
-			.getLogger(Camera.class.getCanonicalName());
+	private final static Logger LOGGER = SecurityCamera.LOGGER;
 
 	private CameraThread cameraThread;
 

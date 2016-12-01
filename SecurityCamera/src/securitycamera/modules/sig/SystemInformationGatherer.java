@@ -17,8 +17,7 @@ import securitycamera.modules.SecurityCameraModule;
 
 public class SystemInformationGatherer extends SecurityCameraModule {
 
-	private final static Logger LOGGER = Logger
-			.getLogger(SystemInformationGatherer.class.getCanonicalName());
+	private final static Logger LOGGER = SecurityCamera.LOGGER;
 	private Sigar sigar;
 
 	public SystemInformationGatherer() {

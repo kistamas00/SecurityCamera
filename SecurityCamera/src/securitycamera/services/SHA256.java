@@ -7,10 +7,11 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.DatatypeConverter;
 
+import securitycamera.SecurityCamera;
+
 public class SHA256 {
 
-	private final static Logger LOGGER = Logger
-			.getLogger(SHA256.class.getCanonicalName());
+	private final static Logger LOGGER = SecurityCamera.LOGGER;
 
 	public static String stringToSHA256(String s) {
 

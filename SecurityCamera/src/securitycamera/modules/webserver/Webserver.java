@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.sun.net.httpserver.HttpServer;
 
+import securitycamera.SecurityCamera;
 import securitycamera.modules.SecurityCameraModule;
 import securitycamera.modules.webserver.auth.UserAuthenticator;
 import securitycamera.modules.webserver.handler.AdminPageHandler;
@@ -14,8 +15,7 @@ import securitycamera.services.Settings;
 
 public class Webserver extends SecurityCameraModule {
 
-	private final static Logger LOGGER = Logger
-			.getLogger(Webserver.class.getCanonicalName());
+	private final static Logger LOGGER = SecurityCamera.LOGGER;
 	private HttpServer server;
 	private boolean isRunning;
 

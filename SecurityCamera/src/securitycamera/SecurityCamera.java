@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import securitycamera.enums.OStype;
 import securitycamera.modules.SecurityCameraModule;
@@ -16,25 +18,73 @@ import securitycamera.services.Settings;
 
 public class SecurityCamera {
 
-	private final static Logger LOGGER = Logger
-			.getLogger(SecurityCamera.class.getCanonicalName());
+	public final static Logger LOGGER = Logger.getLogger("logger");
 	public final static OStype OS_TYPE = OStype
 			.valueOf(System.getProperty("os.name").split(" ")[0].toUpperCase());
 	private final static SecurityCameraModuleContainer MODULES = new SecurityCameraModuleContainer();
 
 	public static void main(String args[]) {
 
+		Path picturePath = null;
+		Path loggerPath = null;
+
+		for (int i = 0; i < args.length; i++) {
+
+			switch (args[i]) {
+
+			case "--picture-path":
+			case "-p":
+
+				picturePath = Paths.get(args[++i]);
+				break;
+
+			case "--logger-path":
+			case "-l":
+
+				loggerPath = Paths.get(args[++i]);
+				break;
+
+			default:
+
+				LOGGER.severe("Parameter error!: " + args.toString());
+				break;
+			}
+		}
+
+		if (loggerPath != null) {
+
+			try {
+
+				if (Files.exists(loggerPath)) {
+
+					FileHandler fileHandler = new FileHandler(
+							loggerPath.toRealPath().toString());
+					fileHandler.setFormatter(new SimpleFormatter());
+
+					LOGGER.addHandler(fileHandler);
+
+					LOGGER.info("Log save in: "
+							+ loggerPath.toRealPath().toString());
+
+				} else {
+
+					LOGGER.warning("Path does not exists");
+				}
+
+			} catch (IOException e) {
+				LOGGER.severe(e.getMessage());
+			}
+		}
+
 		Settings.load();
 
-		try {
+		if (picturePath != null) {
 
-			if (args.length == 1) {
+			try {
 
-				Path path = Paths.get(args[0]);
+				if (Files.exists(picturePath)) {
 
-				if (Files.exists(path)) {
-
-					String newPath = path.toRealPath().toString();
+					String newPath = picturePath.toRealPath().toString();
 					Settings.setSetting(Settings.PICTURES_PATH, newPath);
 
 					LOGGER.info("Pictures folder changed to: " + newPath);
@@ -44,13 +94,9 @@ public class SecurityCamera {
 					LOGGER.warning("Path does not exists");
 				}
 
-			} else if (args.length > 1) {
-
-				LOGGER.warning("Parameter error");
+			} catch (IOException e) {
+				LOGGER.severe(e.getMessage());
 			}
-
-		} catch (IOException e) {
-			LOGGER.severe(e.getMessage());
 		}
 
 		MODULES.addModule(new SystemInformationGatherer());

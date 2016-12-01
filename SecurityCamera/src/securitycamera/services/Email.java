@@ -20,10 +20,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import securitycamera.SecurityCamera;
+
 public class Email {
 
-	private final static Logger LOGGER = Logger
-			.getLogger(Email.class.getCanonicalName());
+	private final static Logger LOGGER = SecurityCamera.LOGGER;
 
 	private final static String USERNAME = "scameraemail@gmail.com";
 	private final static String PASSWORD = "securitycamerapass";

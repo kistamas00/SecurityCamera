@@ -13,12 +13,13 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import securitycamera.SecurityCamera;
+
 public class Settings {
 
 	private static final String SETTINGS_FILE = System.getProperty("user.dir")
 			+ File.separator + "conf.ini";
-	private final static Logger LOGGER = Logger
-			.getLogger(Settings.class.getCanonicalName());
+	private final static Logger LOGGER = SecurityCamera.LOGGER;
 
 	private static Map<String, Object> settings = new HashMap<String, Object>();
 
